@@ -1,4 +1,6 @@
 (executable
+ (name main)           
  (public_name encryptor)
- (name main)
- (libraries encryptor))
+ (modules main)       
+ (libraries lib))     
+

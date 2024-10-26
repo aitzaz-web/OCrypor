@@ -9,7 +9,3 @@ Members:
 5. Muhammad Hisham (mh2539, mh2539@cornell.edu)
 
 
-Collaborators:
-
-Aitzaz - Used Chatgpt for the following:
-    - Define function to read file from terminal

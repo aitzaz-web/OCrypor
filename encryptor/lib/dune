@@ -1,2 +1,4 @@
 (library
- (name encryptor))
+ (name lib)
+ (modules rsa util))
+
