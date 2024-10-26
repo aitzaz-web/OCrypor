@@ -9,3 +9,7 @@ Members:
 5. Muhammad Hisham (mh2539, mh2539@cornell.edu)
 
 
+How to run the program:
+1) run dune exec bin/main.exe in terminal
+2) Insert sample file: you can use sample file in directory e.g by inputting data/sampleinput2.txt
+3) Program will generate the public key and private key as well as show that the encryption and decryption is working correctly.
