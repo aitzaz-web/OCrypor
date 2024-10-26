@@ -7,3 +7,9 @@ Members:
 3. Aitzaz Shaikh (ams845, ams845@cornell.edu)
 4. Tina Tewari (tt552, tt552@cornell.edu)
 5. Muhammad Hisham (mh2539, mh2539@cornell.edu)
+
+
+Collaborators:
+
+Aitzaz - Used Chatgpt for the following:
+    - Define function to read file from terminal
