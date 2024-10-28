@@ -1,6 +1,6 @@
 (* bin/main.ml *)
-open Lib
-open Rsa
+open Encryptor.Rsa
+open Encryptor.Util
 
 (* Function to read a file and return its contents *)
 let read_file filename =

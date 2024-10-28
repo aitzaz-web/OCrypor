@@ -2,5 +2,5 @@
  (name main)           
  (public_name encryptor)
  (modules main)       
- (libraries lib))     
+ (libraries encryptor))     
 
