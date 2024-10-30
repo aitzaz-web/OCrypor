@@ -57,14 +57,35 @@ let rsa_encrypt_test1 _ = assert_equal 4 (Rsa.rsa_encrypt 3 (2, 5))
 (** [rsa_decrypt_test1] tests RSA decryption. *)
 let rsa_decrypt_test1 _ = assert_equal 8 (Rsa.rsa_decrypt 8 (11, 14))
 
-(** [rsa_encrypt_decrypt_test] tests that decryption correctly recovers the
-    original message. *)
-let rsa_encrypt_decrypt_test _ =
+(** [rsa_encrypt_decrypt_test_num] tests that decryption correctly recovers the
+    original int message after encryption. *)
+let rsa_encrypt_decrypt_test_num _ =
   let (e, x), (d, y) = Rsa.generate_keys () in
   let message = 42 in
   let encrypted = Rsa.rsa_encrypt message (e, x) in
   let decrypted = Rsa.rsa_decrypt encrypted (d, y) in
   assert_equal message decrypted
+
+(** [string_to_ascii_list] converts a string to a list of ASCII values. *)
+let string_to_ascii_list word =
+  let chars = List.of_seq (String.to_seq word) in
+  chars |> List.map Char.code
+
+(** [ascii_list_to_string] converts a list of ASCII values back to a string. *)
+let ascii_list_to_string ascii_list =
+  String.init (List.length ascii_list) (fun i ->
+      Char.chr (List.nth ascii_list i))
+
+(**[rsa_encrypt_decrypt_test_string] tests that decryption correctly recovers
+   the original string message after encryption. *)
+let rsa_encrypt_decrypt_test_string _ =
+  let (e, x), (d, y) = Rsa.generate_keys () in
+  let message = "secret" in
+  let ascii_message = string_to_ascii_list message in
+  let encrypted = List.map (fun c -> Rsa.rsa_encrypt c (e, x)) ascii_message in
+  let decrypted = List.map (fun c -> Rsa.rsa_decrypt c (d, y)) encrypted in
+  let decrypted_message = ascii_list_to_string decrypted in
+  assert_equal message decrypted_message
 
 (** [generate_keys_test] tests that generated keys are valid RSA keys. *)
 let generate_keys_test1 _ =
@@ -90,7 +111,9 @@ let tests =
          "mod_exp test: " >:: mod_exp_test3;
          "rsa_encrypt test: " >:: rsa_encrypt_test1;
          "rsa_decrypt test: " >:: rsa_decrypt_test1;
-         "rsa_encrypt and rsa_decrypt test: " >:: rsa_encrypt_decrypt_test;
+         "rsa_encrypt and rsa_decrypt test: " >:: rsa_encrypt_decrypt_test_num;
+         "rsa_encrypt and rsa_decrypt test: "
+         >:: rsa_encrypt_decrypt_test_string;
          "generate_keys test: " >:: generate_keys_test1;
        ]
 

@@ -1,0 +1,36 @@
+---
+# Members of your group.
+group:
+  - name: Aitzaz Shaikh
+    netid: ams845
+  - name: Joshua George
+    netid: jjg322
+  - name: Dylan Vig
+    netid: drv36
+  - name: Tina Tewari
+    netid: tt552
+  - name: Muhammad Hisham
+    netid: mh2539
+# Your PM.
+pm:
+  name: Lawrence Granda Zarzuela
+  netid: lg626
+# Set to false if you don't want your gallery entry to be public.
+publish: true
+# Pithy title
+title: "RSA File Encryption System (RFES)"
+# OK if this is a Cornell Github link, but public gallery viewers won't be able to see it.
+git-repo: "https://github.coecis.cornell.edu/drv36/3110-final-project.git"
+# Replace the URL with your own demo video.
+demo-video-url: "https://www.youtube.com/watch?v=eSBybJGZoCU"
+# Write a short, attention-grabbing description of your project.
+desc: >
+  Our project is an interactive RSA file encryption system. It supports 
+  inputs that are text files. The user is able to choose to encrypt 
+  and decrypt files using the RSA algorithm. This ensures that the contents 
+  of the user's file are safely handled. Our project also includes an 
+  easy-to-use interface via the terminal where the user can choose the file 
+  to be encrypted/decrypted.
+
+
+
