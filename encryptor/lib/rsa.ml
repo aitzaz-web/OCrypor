@@ -19,9 +19,8 @@ module Rsa = struct
 
   (* RSA key generation *)
   let generate_keys () =
-    (* Use Util.generate_prime to generate two large prime numbers *)
-    let p = generate_prime 1000 5000 in
-    let q = generate_prime 1000 5000 in
+    let p = generate_prime 1000 10000 in
+    let q = generate_prime 1000 10000 in
     let n = p * q in
 
     (* Calculate eulers totient function φ(n) *)
