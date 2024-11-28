@@ -14,4 +14,4 @@ Aitzaz:
 
 Joshua:
 1) Used chatgpt for:
-     -defining function to convert from ascii list to a string in the test file
+     -defining function to convert between an ascii list and a string in the test file
