@@ -16,3 +16,4 @@ Joshua:
 1) Used chatgpt for:
      -defining function to convert between an ascii list and a string in the test file
      -writing the int_to_binary and binary_to_int functions in blowfish.ml
+     -string_to_binary function in blowfish.ml
