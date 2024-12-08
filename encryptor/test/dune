@@ -1,6 +1,6 @@
 (test
  (name test_encryptor)
  (libraries ounit2 encryptor)
- )
+)
 
 
