@@ -1,3 +1,3 @@
 (library
- (name encryptor))
-
+ (name encryptor)
+ (modules rsa util ecc))
