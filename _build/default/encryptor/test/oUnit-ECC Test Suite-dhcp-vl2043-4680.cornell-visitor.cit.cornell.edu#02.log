@@ -1,0 +1,66 @@
+2024-12-09T20:31:39+00:00 dhcp-vl2043-4680.cornell-visitor.cit.cornell.edu#02 I: Start test ECC Test Suite:1:ECC key generation test (distinct keys).
+2024-12-09T20:31:39+00:00 dhcp-vl2043-4680.cornell-visitor.cit.cornell.edu#02 E: Test ECC Test Suite:1:ECC key generation test (distinct keys) has failed.
+2024-12-09T20:31:39+00:00 dhcp-vl2043-4680.cornell-visitor.cit.cornell.edu#02 E: Keys must be distinct in test ECC Test Suite:1:ECC key generation test (distinct keys).
+2024-12-09T20:31:39+00:00 dhcp-vl2043-4680.cornell-visitor.cit.cornell.edu#02 E: Raised at OUnitAssert.assert_failure in file "src/lib/ounit2/advanced/oUnitAssert.ml", line 45, characters 2-27
+2024-12-09T20:31:39+00:00 dhcp-vl2043-4680.cornell-visitor.cit.cornell.edu#02 E: Called from OUnitRunner.run_one_test.(fun) in file "src/lib/ounit2/advanced/oUnitRunner.ml", line 83, characters 13-26
+2024-12-09T20:31:39+00:00 dhcp-vl2043-4680.cornell-visitor.cit.cornell.edu#02 E: 
+2024-12-09T20:31:39+00:00 dhcp-vl2043-4680.cornell-visitor.cit.cornell.edu#02 I: End test ECC Test Suite:1:ECC key generation test (distinct keys).
+2024-12-09T20:31:39+00:00 dhcp-vl2043-4680.cornell-visitor.cit.cornell.edu#02 I: Start test ECC Test Suite:2:ECC scalar multiplication test (small scalar).
+2024-12-09T20:31:39+00:00 dhcp-vl2043-4680.cornell-visitor.cit.cornell.edu#02 I: Test ECC Test Suite:2:ECC scalar multiplication test (small scalar) is successful.
+2024-12-09T20:31:39+00:00 dhcp-vl2043-4680.cornell-visitor.cit.cornell.edu#02 I: End test ECC Test Suite:2:ECC scalar multiplication test (small scalar).
+2024-12-09T20:31:39+00:00 dhcp-vl2043-4680.cornell-visitor.cit.cornell.edu#02 I: Start test ECC Test Suite:3:ECC scalar multiplication test (large scalar).
+2024-12-09T20:31:39+00:00 dhcp-vl2043-4680.cornell-visitor.cit.cornell.edu#02 I: Test ECC Test Suite:3:ECC scalar multiplication test (large scalar) is successful.
+2024-12-09T20:31:39+00:00 dhcp-vl2043-4680.cornell-visitor.cit.cornell.edu#02 I: End test ECC Test Suite:3:ECC scalar multiplication test (large scalar).
+2024-12-09T20:31:39+00:00 dhcp-vl2043-4680.cornell-visitor.cit.cornell.edu#02 I: Start test ECC Test Suite:5:ECC scalar multiplication test (random scalars).
+2024-12-09T20:31:39+00:00 dhcp-vl2043-4680.cornell-visitor.cit.cornell.edu#02 I: Test ECC Test Suite:5:ECC scalar multiplication test (random scalars) is successful.
+2024-12-09T20:31:39+00:00 dhcp-vl2043-4680.cornell-visitor.cit.cornell.edu#02 I: End test ECC Test Suite:5:ECC scalar multiplication test (random scalars).
+2024-12-09T20:31:39+00:00 dhcp-vl2043-4680.cornell-visitor.cit.cornell.edu#02 I: Start test ECC Test Suite:6:ECC point addition test (distinct points).
+2024-12-09T20:31:39+00:00 dhcp-vl2043-4680.cornell-visitor.cit.cornell.edu#02 I: Test ECC Test Suite:6:ECC point addition test (distinct points) is successful.
+2024-12-09T20:31:39+00:00 dhcp-vl2043-4680.cornell-visitor.cit.cornell.edu#02 I: End test ECC Test Suite:6:ECC point addition test (distinct points).
+2024-12-09T20:31:39+00:00 dhcp-vl2043-4680.cornell-visitor.cit.cornell.edu#02 I: Start test ECC Test Suite:8:ECC point addition test (same point).
+2024-12-09T20:31:39+00:00 dhcp-vl2043-4680.cornell-visitor.cit.cornell.edu#02 I: Test ECC Test Suite:8:ECC point addition test (same point) is successful.
+2024-12-09T20:31:39+00:00 dhcp-vl2043-4680.cornell-visitor.cit.cornell.edu#02 I: End test ECC Test Suite:8:ECC point addition test (same point).
+2024-12-09T20:31:39+00:00 dhcp-vl2043-4680.cornell-visitor.cit.cornell.edu#02 I: Start test ECC Test Suite:9:ECC point addition test (random points).
+2024-12-09T20:31:39+00:00 dhcp-vl2043-4680.cornell-visitor.cit.cornell.edu#02 I: Test ECC Test Suite:9:ECC point addition test (random points) is successful.
+2024-12-09T20:31:39+00:00 dhcp-vl2043-4680.cornell-visitor.cit.cornell.edu#02 I: End test ECC Test Suite:9:ECC point addition test (random points).
+2024-12-09T20:31:39+00:00 dhcp-vl2043-4680.cornell-visitor.cit.cornell.edu#02 I: Start test ECC Test Suite:11:ECC encrypt and decrypt test (large message).
+2024-12-09T20:31:39+00:00 dhcp-vl2043-4680.cornell-visitor.cit.cornell.edu#02 E: Test ECC Test Suite:11:ECC encrypt and decrypt test (large message) has failed.
+2024-12-09T20:31:39+00:00 dhcp-vl2043-4680.cornell-visitor.cit.cornell.edu#02 E: not equal in test ECC Test Suite:11:ECC encrypt and decrypt test (large message).
+2024-12-09T20:31:39+00:00 dhcp-vl2043-4680.cornell-visitor.cit.cornell.edu#02 E: Raised at OUnitAssert.assert_failure in file "src/lib/ounit2/advanced/oUnitAssert.ml", line 45, characters 2-27
+2024-12-09T20:31:39+00:00 dhcp-vl2043-4680.cornell-visitor.cit.cornell.edu#02 E: Called from OUnitRunner.run_one_test.(fun) in file "src/lib/ounit2/advanced/oUnitRunner.ml", line 83, characters 13-26
+2024-12-09T20:31:39+00:00 dhcp-vl2043-4680.cornell-visitor.cit.cornell.edu#02 E: 
+2024-12-09T20:31:39+00:00 dhcp-vl2043-4680.cornell-visitor.cit.cornell.edu#02 I: End test ECC Test Suite:11:ECC encrypt and decrypt test (large message).
+2024-12-09T20:31:39+00:00 dhcp-vl2043-4680.cornell-visitor.cit.cornell.edu#02 I: Start test ECC Test Suite:13:ECC decrypt failure test (wrong private key).
+2024-12-09T20:31:39+00:00 dhcp-vl2043-4680.cornell-visitor.cit.cornell.edu#02 E: Test ECC Test Suite:13:ECC decrypt failure test (wrong private key) has failed.
+2024-12-09T20:31:39+00:00 dhcp-vl2043-4680.cornell-visitor.cit.cornell.edu#02 E: expected exception Failure("Decryption failed"), but no exception was raised. in test ECC Test Suite:13:ECC decrypt failure test (wrong private key).
+2024-12-09T20:31:39+00:00 dhcp-vl2043-4680.cornell-visitor.cit.cornell.edu#02 E: Raised at OUnitAssert.assert_failure in file "src/lib/ounit2/advanced/oUnitAssert.ml", line 45, characters 2-27
+2024-12-09T20:31:39+00:00 dhcp-vl2043-4680.cornell-visitor.cit.cornell.edu#02 E: Called from OUnitAssert.assert_raises.get_error_string in file "src/lib/ounit2/advanced/oUnitAssert.ml", line 344, characters 12-30
+2024-12-09T20:31:39+00:00 dhcp-vl2043-4680.cornell-visitor.cit.cornell.edu#02 E: Called from OUnitRunner.run_one_test.(fun) in file "src/lib/ounit2/advanced/oUnitRunner.ml", line 83, characters 13-26
+2024-12-09T20:31:39+00:00 dhcp-vl2043-4680.cornell-visitor.cit.cornell.edu#02 E: 
+2024-12-09T20:31:39+00:00 dhcp-vl2043-4680.cornell-visitor.cit.cornell.edu#02 I: End test ECC Test Suite:13:ECC decrypt failure test (wrong private key).
+2024-12-09T20:31:39+00:00 dhcp-vl2043-4680.cornell-visitor.cit.cornell.edu#02 I: Start test ECC Test Suite:15:ECC encrypt and decrypt edge cases.
+2024-12-09T20:31:39+00:00 dhcp-vl2043-4680.cornell-visitor.cit.cornell.edu#02 E: Test ECC Test Suite:15:ECC encrypt and decrypt edge cases has failed.
+2024-12-09T20:31:39+00:00 dhcp-vl2043-4680.cornell-visitor.cit.cornell.edu#02 E: not equal in test ECC Test Suite:15:ECC encrypt and decrypt edge cases.
+2024-12-09T20:31:39+00:00 dhcp-vl2043-4680.cornell-visitor.cit.cornell.edu#02 E: Raised at OUnitAssert.assert_failure in file "src/lib/ounit2/advanced/oUnitAssert.ml", line 45, characters 2-27
+2024-12-09T20:31:39+00:00 dhcp-vl2043-4680.cornell-visitor.cit.cornell.edu#02 E: Called from Stdlib__List.iter in file "list.ml", line 112, characters 12-15
+2024-12-09T20:31:39+00:00 dhcp-vl2043-4680.cornell-visitor.cit.cornell.edu#02 E: Called from OUnitRunner.run_one_test.(fun) in file "src/lib/ounit2/advanced/oUnitRunner.ml", line 83, characters 13-26
+2024-12-09T20:31:39+00:00 dhcp-vl2043-4680.cornell-visitor.cit.cornell.edu#02 E: 
+2024-12-09T20:31:39+00:00 dhcp-vl2043-4680.cornell-visitor.cit.cornell.edu#02 I: End test ECC Test Suite:15:ECC encrypt and decrypt edge cases.
+2024-12-09T20:31:39+00:00 dhcp-vl2043-4680.cornell-visitor.cit.cornell.edu#02 I: Start test ECC Test Suite:17:ECC scalar multiplication large scalar test.
+2024-12-09T20:31:39+00:00 dhcp-vl2043-4680.cornell-visitor.cit.cornell.edu#02 I: Test ECC Test Suite:17:ECC scalar multiplication large scalar test is successful.
+2024-12-09T20:31:39+00:00 dhcp-vl2043-4680.cornell-visitor.cit.cornell.edu#02 I: End test ECC Test Suite:17:ECC scalar multiplication large scalar test.
+2024-12-09T20:31:39+00:00 dhcp-vl2043-4680.cornell-visitor.cit.cornell.edu#02 I: Start test ECC Test Suite:19:ECC point addition identity property test.
+2024-12-09T20:31:39+00:00 dhcp-vl2043-4680.cornell-visitor.cit.cornell.edu#02 I: Test ECC Test Suite:19:ECC point addition identity property test is successful.
+2024-12-09T20:31:39+00:00 dhcp-vl2043-4680.cornell-visitor.cit.cornell.edu#02 I: End test ECC Test Suite:19:ECC point addition identity property test.
+2024-12-09T20:31:39+00:00 dhcp-vl2043-4680.cornell-visitor.cit.cornell.edu#02 I: Start test ECC Test Suite:21:ECC point addition associative test.
+2024-12-09T20:31:39+00:00 dhcp-vl2043-4680.cornell-visitor.cit.cornell.edu#02 I: Test ECC Test Suite:21:ECC point addition associative test is successful.
+2024-12-09T20:31:39+00:00 dhcp-vl2043-4680.cornell-visitor.cit.cornell.edu#02 I: End test ECC Test Suite:21:ECC point addition associative test.
+2024-12-09T20:31:39+00:00 dhcp-vl2043-4680.cornell-visitor.cit.cornell.edu#02 I: Start test ECC Test Suite:22:ECC encrypt-decrypt boundary test.
+2024-12-09T20:31:39+00:00 dhcp-vl2043-4680.cornell-visitor.cit.cornell.edu#02 E: Test ECC Test Suite:22:ECC encrypt-decrypt boundary test has failed.
+2024-12-09T20:31:39+00:00 dhcp-vl2043-4680.cornell-visitor.cit.cornell.edu#02 E: not equal in test ECC Test Suite:22:ECC encrypt-decrypt boundary test.
+2024-12-09T20:31:39+00:00 dhcp-vl2043-4680.cornell-visitor.cit.cornell.edu#02 E: Raised at OUnitAssert.assert_failure in file "src/lib/ounit2/advanced/oUnitAssert.ml", line 45, characters 2-27
+2024-12-09T20:31:39+00:00 dhcp-vl2043-4680.cornell-visitor.cit.cornell.edu#02 E: Called from Stdlib__List.iter in file "list.ml", line 112, characters 12-15
+2024-12-09T20:31:39+00:00 dhcp-vl2043-4680.cornell-visitor.cit.cornell.edu#02 E: Called from OUnitRunner.run_one_test.(fun) in file "src/lib/ounit2/advanced/oUnitRunner.ml", line 83, characters 13-26
+2024-12-09T20:31:39+00:00 dhcp-vl2043-4680.cornell-visitor.cit.cornell.edu#02 E: 
+2024-12-09T20:31:39+00:00 dhcp-vl2043-4680.cornell-visitor.cit.cornell.edu#02 I: End test ECC Test Suite:22:ECC encrypt-decrypt boundary test.
+2024-12-09T20:31:39+00:00 dhcp-vl2043-4680.cornell-visitor.cit.cornell.edu#02 I: Start test ECC Test Suite:24:ECC scalar multiplication negative test.
