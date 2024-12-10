@@ -19,5 +19,6 @@ Joshua:
      -string_to_binary, binary_to_string, and binary_string_to_list in blowfish.ml
      -tracking and adjusting for the amount of padding in encrypt and decrypt
      -Printf.sprintf "%08d" usage
+     -in assert_failure tests
 
 2) Blowfish reference: https://jacobfilipp.com/DrDobbs/articles/DDJ/1994/9404/9404d/9404d.htm

@@ -1,4 +1,6 @@
 (library
  (name encryptor)
- (libraries csv))
+ (libraries csv)
+ (instrumentation
+  (backend bisect_ppx)))
 
