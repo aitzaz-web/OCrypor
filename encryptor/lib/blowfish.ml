@@ -1,4 +1,5 @@
 open Csv
+open Util
 
 (**[csv_to_array filename] loads in the contents of the csv file at [filename]
    as an array.*)
@@ -8,20 +9,18 @@ let csv_to_array filename =
        (fun s -> int_of_string (String.trim s))
        (List.flatten (Csv.load filename)))
 
-(**[p_array] is the p-array of constant ints needed for blowfish.*)
-let p_array = csv_to_array "../data/p_array.csv"
+let base_data_dir =
+  let rec find_root dir =
+    if Sys.file_exists (Filename.concat dir "dune-project") then dir
+    else find_root (Filename.dirname dir)
+  in
+  find_root (Sys.getcwd ()) ^ "/data/"
 
-(**[s_box_1] is the first s-box of constant ints needed for blowfish.*)
-let s_box_1 = csv_to_array "../data/s1_box.csv"
-
-(**[s_box_2] is the second s-box of constant ints needed for blowfish.*)
-let s_box_2 = csv_to_array "../data/s2_box.csv"
-
-(**[s_box_3] is the third s-box of constant ints needed for blowfish.*)
-let s_box_3 = csv_to_array "../data/s3_box.csv"
-
-(**[s_box_4] is the fourth s-box of constant ints needed for blowfish. *)
-let s_box_4 = csv_to_array "../data/s4_box.csv"
+let p_array = csv_to_array (base_data_dir ^ "p_array.csv")
+let s_box_1 = csv_to_array (base_data_dir ^ "s1_box.csv")
+let s_box_2 = csv_to_array (base_data_dir ^ "s2_box.csv")
+let s_box_3 = csv_to_array (base_data_dir ^ "s3_box.csv")
+let s_box_4 = csv_to_array (base_data_dir ^ "s4_box.csv")
 
 let int_to_binary n =
   let rec to_binary_list n acc =
@@ -189,3 +188,57 @@ let decrypt ciphertext_str key =
     let unpadded_binary = sub 0 (List.length value - padding_length) value in
     binary_to_string unpadded_binary
   with _ -> failwith "Error occurred during decryption."
+
+let encrypt_file_blowfish filename key =
+  try
+    let content = BatFile.with_file_in filename BatIO.read_all in
+    let rec split_into_chunks s chunk_size =
+      if String.length s <= chunk_size then [ s ]
+      else
+        let chunk = String.sub s 0 chunk_size in
+        let rest = String.sub s chunk_size (String.length s - chunk_size) in
+        chunk :: split_into_chunks rest chunk_size
+    in
+    let chunk_size = 8 in
+    let message_chunks = split_into_chunks content chunk_size in
+    let encrypted_chunks =
+      List.map (fun chunk -> encrypt chunk key) message_chunks
+    in
+    let encrypted_message = String.concat "" encrypted_chunks in
+    let encrypted_filename = filename ^ ".enc" in
+    BatFile.with_file_out encrypted_filename (fun out ->
+        BatIO.nwrite out encrypted_message);
+    print_endline ("File encrypted successfully. Saved as " ^ encrypted_filename)
+  with _ -> failwith "Error occurred during file level encryption."
+
+let decrypt_file_blowfish filename key =
+  try
+    let content = BatFile.with_file_in filename BatIO.read_all in
+    let rec split_encrypted s chunk_sizes acc =
+      match chunk_sizes with
+      | [] -> List.rev acc
+      | size :: rest ->
+          let chunk = String.sub s 0 size in
+          let remaining = String.sub s size (String.length s - size) in
+          split_encrypted remaining rest (chunk :: acc)
+    in
+    let chunk_size = 96 in
+    let rec split_into_chunks s chunk_size =
+      if String.length s <= chunk_size then [ String.length s ]
+      else
+        chunk_size
+        :: split_into_chunks
+             (String.sub s chunk_size (String.length s - chunk_size))
+             chunk_size
+    in
+    let chunk_sizes = split_into_chunks content chunk_size in
+    let encrypted_chunks_split = split_encrypted content chunk_sizes [] in
+    let decrypted_chunks =
+      List.map (fun chunk -> decrypt chunk key) encrypted_chunks_split
+    in
+    let decrypted_message = String.concat "" decrypted_chunks in
+    let decrypted_filename = filename ^ ".dec" in
+    BatFile.with_file_out decrypted_filename (fun out ->
+        BatIO.nwrite out decrypted_message);
+    print_endline ("File decrypted successfully. Saved as " ^ decrypted_filename)
+  with _ -> failwith "Error occurred during file level decryption."

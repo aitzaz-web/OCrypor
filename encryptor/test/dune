@@ -1,7 +1,7 @@
 (test
  (name test_blowfish)
  (libraries ounit2 encryptor)
- (deps (glob_files_rec ../data/*)))
+ )
 
 
 (test

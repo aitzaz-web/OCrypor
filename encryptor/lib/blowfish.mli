@@ -12,6 +12,15 @@ val decrypt : string -> int -> string
    blowfish encryption in reverse so the algo iterates down from p18 to p3 and
    then xors p2 and p1 seperately at the end.*)
 
+val encrypt_file_blowfish : string -> int -> unit
+(**[encrypt_file_blowfish filename key] encrypts the contents of the file at
+   [filename] using the user's [key]. *)
+
+val decrypt_file_blowfish : string -> int -> unit
+(**[decrypt_file_blowfish filename key] decrypts the contents of the encrypted
+   file at [filename] using the user's [key] (same key that was used for
+   encryption). *)
+
 val int_to_binary : int -> int list
 (**[int_to_binary n] converts a decimal number [n] to its binary representation
    as a list.*)
