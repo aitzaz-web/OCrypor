@@ -2,13 +2,17 @@
 val pad_block : string -> string
 
 (* Splits a message into 16-byte blocks, padding the last block if necessary *)
-val split_into_blocks : string -> string list
+val split_into_blocks_encrypt : string -> string list
+
+val split_into_blocks_decrypt : string -> string list
 
 (* The AES S-Box used for the SubBytes step *)
 val s_box : int array
 
 (* The inverse AES S-Box used for the Inverse SubBytes step *)
 val inv_s_box : int array
+
+val transpose : 'a array array -> 'a array array
 
 (* Converts a 16-byte string into a 4x4 matrix representation *)
 val string_to_state : string -> int array array
@@ -50,3 +54,7 @@ val encrypt : string -> string -> string
 
 (* Decrypts a message using AES-128 *)
 val decrypt : string -> string -> string
+
+val encrypt_file : string -> string -> unit
+
+val decrypt_file : string -> string -> unit
