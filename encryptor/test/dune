@@ -3,4 +3,7 @@
  (libraries ounit2 encryptor)
  )
 
+(test
+ (name test_aes128)
+ (libraries base64 ounit2 encryptor))
 
