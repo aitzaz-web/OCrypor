@@ -6,21 +6,6 @@ open Encryptor.Sha3
 (********************************* RC2 component tests
   *****************************)
 
-(** [read_int64_file_test1] tests reading Int64 hex values from a file *)
-let read_int64_file_test1 _ =
-  (* Create a temporary file with test data *)
-  let filename = "test_hex.txt" in
-  let test_values = [ "1A"; "2B"; "3C" ] in
-  let oc = open_out filename in
-  List.iter (fun v -> Printf.fprintf oc "%s\n" v) test_values;
-  close_out oc;
-  let result = read_int64_file filename in
-  Sys.remove filename;
-  assert_equal 3 (Array.length result);
-  assert_equal (Int64.of_int 0x1A) result.(0);
-  assert_equal (Int64.of_int 0x2B) result.(1);
-  assert_equal (Int64.of_int 0x3C) result.(2)
-
 (** [rotl64_test1] tests basic left rotation by 1 bit *)
 let rotl64_test1 _ =
   let input = Int64.of_int 1 in
@@ -569,6 +554,46 @@ let test_expand_key _ =
   (* Ensure values after the effective key size are zeroed *)
   assert_equal expanded_key_short.(last_used_index + 1) ~printer:string_of_int
 
+open OUnit2
+
+let test_driver_encrypt_decrypt _ =
+  (* Temporary file names for testing *)
+  let input_filename = "test_message.txt" in
+  let encrypted_filename = input_filename ^ ".enc" in
+  let decrypted_filename = input_filename ^ ".dec" in
+
+  (* Test message to encrypt *)
+  let test_message =
+    "This is a test message for encryption and decryption. It ensures the \
+     process is reversible and consistent."
+  in
+
+  (* Step 1: Write test message to file *)
+  let oc = open_out input_filename in
+  output_string oc test_message;
+  close_out oc;
+
+  (* Step 2: Encrypt the file *)
+  assert_bool "Encryption failed" (encrypt input_filename);
+
+  (* Step 3: Decrypt the file *)
+  assert_bool "Decryption failed" (decrypt encrypted_filename);
+
+  (* Step 4: Verify the decrypted file contents match the original *)
+  let ic = open_in decrypted_filename in
+  let decrypted_message = really_input_string ic (in_channel_length ic) in
+  close_in ic;
+
+  assert_equal
+    ~printer:(fun x -> x)
+    test_message decrypted_message
+    ~msg:"Decrypted message does not match the original";
+
+  (* Clean up temporary files *)
+  Sys.remove input_filename;
+  Sys.remove encrypted_filename;
+  Sys.remove decrypted_filename
+
 let tests =
   "test suite"
   >::: [
@@ -595,8 +620,7 @@ let tests =
          "test_pad_input" >:: test_pad_input;
          "test_absorb" >:: test_absorb;
          "test_squeeze" >:: test_squeeze;
-         (* "test_sha3_256" >:: test_sha3_256; *)
-         (* "test_expand_key" >:: test_expand_key; *)
+         "test_driver_encrypt_decrypt" >:: test_driver_encrypt_decrypt;
        ]
 
 let _ = run_test_tt_main tests

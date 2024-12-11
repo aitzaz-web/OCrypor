@@ -1,8 +1,3 @@
-val read_int64_file : string -> int64 array
-(** [read_int64_file filename] reads Int64 hex values from a file at [filename]
-    and returns them as an Int64 array. Each value should be on a new line.
-    Returns an empty array on error. *)
-
 val pitable : int array
 (** The RC2 PITABLE constants for key expansion. *)
 
