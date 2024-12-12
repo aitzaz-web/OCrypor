@@ -1,6 +1,6 @@
 (library
  (name encryptor)
  (libraries csv batteries)
- (modules rsa util ecc blowfish)  
+ (modules rsa util ecc blowfish)
  (instrumentation
   (backend bisect_ppx)))

@@ -1,6 +1,7 @@
 open OUnit2
 open Encryptor.Rsa
 open Encryptor.Util
+open Encryptor.Sha3
 
 (** [string_to_ascii_list] converts a string to a list of ASCII values. *)
 let string_to_ascii_list word =
