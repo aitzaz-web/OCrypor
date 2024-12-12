@@ -12,8 +12,7 @@ let n = 5
 let assert_point_valid point =
   match point with
   | ECC.Point (x, y) ->
-      assert_bool "Point must be on the curve"
-        (ECC.is_on_curve (x, y) a b p)
+      assert_bool "Point must be on the curve" (ECC.is_on_curve (x, y) a b p)
   | Infinity -> ()
 
 (* Test: Key generation produces valid keys *)
@@ -88,7 +87,7 @@ let ecc_point_addition_random_test _ =
 let ecc_encrypt_decrypt_test_small _ =
   let keys = ECC.generate_keys base_point a b p n in
   let message = 42 in
-  let (c1, c2) = ECC.encrypt message base_point keys.public_key a b p n in
+  let c1, c2 = ECC.encrypt message base_point keys.public_key a b p n in
   let decrypted_message = ECC.decrypt (c1, c2) keys.private_key a p in
   assert_equal message decrypted_message
 
@@ -96,7 +95,7 @@ let ecc_encrypt_decrypt_test_small _ =
 let ecc_encrypt_decrypt_test_large _ =
   let keys = ECC.generate_keys base_point a b p n in
   let message = 89 in
-  let (c1, c2) = ECC.encrypt message base_point keys.public_key a b p n in
+  let c1, c2 = ECC.encrypt message base_point keys.public_key a b p n in
   let decrypted_message = ECC.decrypt (c1, c2) keys.private_key a p in
   assert_equal message decrypted_message
 
@@ -105,7 +104,7 @@ let ecc_encrypt_decrypt_random_test _ =
   for _ = 1 to 10 do
     let keys = ECC.generate_keys base_point a b p n in
     let message = Random.int (p - 1) in
-    let (c1, c2) = ECC.encrypt message base_point keys.public_key a b p n in
+    let c1, c2 = ECC.encrypt message base_point keys.public_key a b p n in
     let decrypted_message = ECC.decrypt (c1, c2) keys.private_key a p in
     assert_equal message decrypted_message
   done
@@ -115,34 +114,34 @@ let ecc_decrypt_failure_wrong_key _ =
   let keys = ECC.generate_keys base_point a b p n in
   let wrong_keys = ECC.generate_keys base_point a b p n in
   let message = 50 in
-  let (c1, c2) = ECC.encrypt message base_point keys.public_key a b p n in
-  assert_raises (Failure "Decryption failed")
-    (fun () -> ECC.decrypt (c1, c2) wrong_keys.private_key a p)
+  let c1, c2 = ECC.encrypt message base_point keys.public_key a b p n in
+  assert_raises (Failure "Decryption failed") (fun () ->
+      ECC.decrypt (c1, c2) wrong_keys.private_key a p)
 
 (* Test: Decrypt failure with tampered ciphertext *)
 let ecc_decrypt_failure_tampered_cipher _ =
   let keys = ECC.generate_keys base_point a b p n in
   let message = 42 in
-  let (c1, _) = ECC.encrypt message base_point keys.public_key a b p n in
+  let c1, _ = ECC.encrypt message base_point keys.public_key a b p n in
   let tampered_c2 = ECC.Point (0, 0) in
-  assert_raises (Failure "Decryption failed")
-    (fun () -> ECC.decrypt (c1, tampered_c2) keys.private_key a p)
+  assert_raises (Failure "Decryption failed") (fun () ->
+      ECC.decrypt (c1, tampered_c2) keys.private_key a p)
 
 (* Test: Edge case messages for encryption and decryption *)
 let ecc_encrypt_decrypt_edge_cases _ =
   let keys = ECC.generate_keys base_point a b p n in
   List.iter
     (fun msg ->
-      let (c1, c2) = ECC.encrypt msg base_point keys.public_key a b p n in
+      let c1, c2 = ECC.encrypt msg base_point keys.public_key a b p n in
       let decrypted_message = ECC.decrypt (c1, c2) keys.private_key a p in
       assert_equal msg decrypted_message)
-    [0; 1; p - 1; 50; 97]
+    [ 0; 1; p - 1; 50; 97 ]
 
 (* Test: Point addition with invalid points *)
 let ecc_point_addition_invalid_points_test _ =
   let invalid_point = ECC.Point (100, 200) in
-  assert_raises (Failure "Invalid point")
-    (fun () -> ECC.add invalid_point base_point a p)
+  assert_raises (Failure "Invalid point") (fun () ->
+      ECC.add invalid_point base_point a p)
 
 (* Test: Scalar multiplication with very large scalar *)
 let ecc_scalar_mult_large_scalar_test _ =
@@ -181,15 +180,16 @@ let ecc_point_addition_associative_test _ =
   let result2 = ECC.add (ECC.add point1 point2 a p) point3 a p in
   assert_equal result1 result2
 
-(* Test: Ensure encrypt-decrypt preserves message integrity for boundary messages *)
+(* Test: Ensure encrypt-decrypt preserves message integrity for boundary
+   messages *)
 let ecc_encrypt_decrypt_boundary_test _ =
   let keys = ECC.generate_keys base_point a b p n in
   List.iter
     (fun msg ->
-      let (c1, c2) = ECC.encrypt msg base_point keys.public_key a b p n in
+      let c1, c2 = ECC.encrypt msg base_point keys.public_key a b p n in
       let decrypted_message = ECC.decrypt (c1, c2) keys.private_key a p in
       assert_equal msg decrypted_message)
-    [0; p - 1]
+    [ 0; p - 1 ]
 
 (* Test: Validate that key generation produces unique private keys *)
 let ecc_private_key_uniqueness_test _ =
@@ -201,8 +201,8 @@ let ecc_private_key_uniqueness_test _ =
 (* Test: Validate point multiplication with negative scalar *)
 let ecc_scalar_mult_negative_test _ =
   let scalar = -3 in
-  assert_raises (Failure "Negative scalar")
-    (fun () -> ECC.scalar_mult scalar base_point a p)
+  assert_raises (Failure "Negative scalar") (fun () ->
+      ECC.scalar_mult scalar base_point a p)
 
 (* Test: Ensure point doubling works correctly *)
 let ecc_point_doubling_test _ =
@@ -224,16 +224,15 @@ let ecc_scalar_mult_max_scalar_test _ =
 let ecc_encrypt_decrypt_large_message_test _ =
   let keys = ECC.generate_keys base_point a b p n in
   let message = p - 10 in
-  let (c1, c2) = ECC.encrypt message base_point keys.public_key a b p n in
+  let c1, c2 = ECC.encrypt message base_point keys.public_key a b p n in
   let decrypted_message = ECC.decrypt (c1, c2) keys.private_key a p in
   assert_equal message decrypted_message
-
 
 (* Test: Ensure point addition with invalid points raises an exception *)
 let ecc_point_addition_invalid_test _ =
   let invalid_point = ECC.Point (1000, 2000) in
-  assert_raises (Failure "Invalid point")
-    (fun () -> ECC.add base_point invalid_point a p)
+  assert_raises (Failure "Invalid point") (fun () ->
+      ECC.add base_point invalid_point a p)
 
 (* Test: Scalar multiplication with zero returns Infinity *)
 let ecc_scalar_mult_zero_return_infinity_test _ =
@@ -270,15 +269,15 @@ let ecc_decrypt_unencrypted_message_test _ =
   let keys = ECC.generate_keys base_point a b p n in
   let invalid_c1 = ECC.Point (0, 0) in
   let invalid_c2 = ECC.Point (1, 1) in
-  assert_raises (Failure "Decryption failed")
-    (fun () -> ECC.decrypt (invalid_c1, invalid_c2) keys.private_key a p)
+  assert_raises (Failure "Decryption failed") (fun () ->
+      ECC.decrypt (invalid_c1, invalid_c2) keys.private_key a p)
 
 (* Test: Validate that encrypt-decrypt works for multiple random messages *)
 let ecc_encrypt_decrypt_multiple_random_test _ =
   for _ = 1 to 10 do
     let keys = ECC.generate_keys base_point a b p n in
     let message = Random.int p in
-    let (c1, c2) = ECC.encrypt message base_point keys.public_key a b p n in
+    let c1, c2 = ECC.encrypt message base_point keys.public_key a b p n in
     let decrypted_message = ECC.decrypt (c1, c2) keys.private_key a p in
     assert_equal message decrypted_message
   done
@@ -293,7 +292,6 @@ let ecc_point_addition_commutativity_random_test _ =
     assert_equal result1 result2
   done
 
-
 (* Group all ECC tests *)
 let ecc_tests =
   [
@@ -301,16 +299,14 @@ let ecc_tests =
     "ECC key generation test (distinct keys)" >:: ecc_key_generation_test2;
     "ECC scalar multiplication test (small scalar)" >:: ecc_scalar_mult_test1;
     "ECC scalar multiplication test (large scalar)" >:: ecc_scalar_mult_test2;
-    "ECC scalar multiplication test (scalar = 0)"
-    >:: ecc_scalar_mult_zero_test;
+    "ECC scalar multiplication test (scalar = 0)" >:: ecc_scalar_mult_zero_test;
     "ECC scalar multiplication test (random scalars)"
     >:: ecc_scalar_mult_random_test;
     "ECC point addition test (distinct points)" >:: ecc_point_addition_test1;
     "ECC point addition test (with Infinity)"
     >:: ecc_point_addition_infinity_test;
     "ECC point addition test (same point)" >:: ecc_point_addition_self_test;
-    "ECC point addition test (random points)"
-    >:: ecc_point_addition_random_test;
+    "ECC point addition test (random points)" >:: ecc_point_addition_random_test;
     "ECC encrypt and decrypt test (small message)"
     >:: ecc_encrypt_decrypt_test_small;
     "ECC encrypt and decrypt test (large message)"
@@ -333,11 +329,9 @@ let ecc_tests =
     >:: ecc_point_addition_commutative_test;
     "ECC point addition associative test"
     >:: ecc_point_addition_associative_test;
-    "ECC encrypt-decrypt boundary test"
-    >:: ecc_encrypt_decrypt_boundary_test;
+    "ECC encrypt-decrypt boundary test" >:: ecc_encrypt_decrypt_boundary_test;
     "ECC private key uniqueness test" >:: ecc_private_key_uniqueness_test;
-    "ECC scalar multiplication negative test"
-    >:: ecc_scalar_mult_negative_test;
+    "ECC scalar multiplication negative test" >:: ecc_scalar_mult_negative_test;
     "ECC point doubling test" >:: ecc_point_doubling_test;
     "ECC scalar multiplication identity test" >:: ecc_scalar_mult_identity_test;
     "ECC scalar multiplication max scalar test"
@@ -356,7 +350,6 @@ let ecc_tests =
     >:: ecc_encrypt_decrypt_multiple_random_test;
     "ECC point addition commutativity random test"
     >:: ecc_point_addition_commutativity_random_test;
-
   ]
 
 (* Run ECC tests *)
