@@ -1,3 +1,7 @@
 (library
  (name encryptor)
- (modules rsa util ecc))
+ (libraries csv batteries)
+ (modules rsa util ecc)
+ (instrumentation
+  (backend bisect_ppx)))
+

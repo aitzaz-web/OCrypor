@@ -1,6 +1,7 @@
 open Encryptor.Rsa
 open Encryptor.Ecc
 open Encryptor.Util
+open Encryptor.Blowfish
 
 (* Function to read a file and return its contents *)
 let read_file filename =

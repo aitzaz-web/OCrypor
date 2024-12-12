@@ -6,5 +6,7 @@
  (name test_ecc)
  (libraries ounit2 encryptor))
 
-
+(test
+ (name test_blowfish)
+ (libraries ounit2 encryptor))
 
