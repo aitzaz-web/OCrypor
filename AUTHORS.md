@@ -17,4 +17,4 @@ Joshua:
      -defining function to convert between an ascii list and a string in the test file
 
 Tina: 
-1) I used chat gpt in my ECC test file and with my add and point_to_string functions 
+1) I used chat gpt in my ECC test file and with my add and point_to_string functions, i used chat gpt to help with my ecc.mli
