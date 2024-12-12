@@ -442,25 +442,29 @@ let test_encrypt_decrypt_file _ =
 let tests =
   "test suite"
   >::: [
-         (* "test_pad_block_1" >:: test_pad_block_1; "test_pad_block_2" >::
-            test_pad_block_2; "test_split_into_blocks_1" >::
-            test_split_into_blocks_encrypt_1; "test_split_into_blocks_2" >::
-            test_split_into_blocks_encrypt_2; "test_split_into_blocks_3" >::
-            test_split_into_blocks_encrypt_3; "test_string_to_state_1" >::
-            test_string_to_state_1; "test_string_to_state_2" >::
-            test_string_to_state_2; "test_sub_bytes_1" >:: test_sub_bytes_1;
-            "test_inv_sub_bytes_1" >:: test_inv_sub_bytes_1; "test_shift_rows_1"
-            >:: test_shift_rows_1; "test_shift_rows_2" >:: test_shift_rows_2;
-            "test_inv_shift_rows_1" >:: test_inv_shift_rows_1; "test_transpose"
-            >:: test_transpose; "test_gmul_1" >:: test_gmul_1; "test_gmul_2" >::
-            test_gmul_2; "test_gmul_cases" >:: test_gmul_cases;
-            "test_all_mix_columns_inverse" >:: test_all_mix_columns_inverse;
-            "test_key_expansion" >:: test_key_expansion;
-            "test_aes_encrypt_block" >:: test_aes_encrypt_block;
-            "test_aes_decrypt_block" >:: test_aes_decrypt_block; "test_encrypt"
-            >:: test_encrypt; "test_decrypt" >:: test_decrypt;
-            "test_encrypt_file_creates_file" >::
-            test_encrypt_file_creates_file; *)
+         "test_pad_block_1" >:: test_pad_block_1;
+         "test_pad_block_2" >:: test_pad_block_2;
+         "test_split_into_blocks_1" >:: test_split_into_blocks_encrypt_1;
+         "test_split_into_blocks_2" >:: test_split_into_blocks_encrypt_2;
+         "test_split_into_blocks_3" >:: test_split_into_blocks_encrypt_3;
+         "test_string_to_state_1" >:: test_string_to_state_1;
+         "test_string_to_state_2" >:: test_string_to_state_2;
+         "test_sub_bytes_1" >:: test_sub_bytes_1;
+         "test_inv_sub_bytes_1" >:: test_inv_sub_bytes_1;
+         "test_shift_rows_1" >:: test_shift_rows_1;
+         "test_shift_rows_2" >:: test_shift_rows_2;
+         "test_inv_shift_rows_1" >:: test_inv_shift_rows_1;
+         "test_transpose" >:: test_transpose;
+         "test_gmul_1" >:: test_gmul_1;
+         "test_gmul_2" >:: test_gmul_2;
+         "test_gmul_cases" >:: test_gmul_cases;
+         "test_all_mix_columns_inverse" >:: test_all_mix_columns_inverse;
+         (* "test_key_expansion" >:: test_key_expansion; *)
+         "test_aes_encrypt_block" >:: test_aes_encrypt_block;
+         "test_aes_decrypt_block" >:: test_aes_decrypt_block;
+         "test_encrypt" >:: test_encrypt;
+         "test_decrypt" >:: test_decrypt;
+         "test_encrypt_file_creates_file" >:: test_encrypt_file_creates_file;
          "test_encrypt_decrypt_file" >:: test_encrypt_decrypt_file;
        ]
 
