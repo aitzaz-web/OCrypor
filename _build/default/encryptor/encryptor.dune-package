@@ -1,4 +1,0 @@
-(lang dune 3.16)
-(name encryptor)
-(sections (lib .) (bin ../../bin) (doc ../../doc/encryptor))
-(files (lib (META dune-package opam)) (bin (encryptor)) (doc (README.md)))

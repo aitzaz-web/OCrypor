@@ -1,1 +1,0 @@
-../../../../default/encryptor/README.md
