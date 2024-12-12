@@ -1,7 +1,6 @@
 open Encryptor.Rsa
 open Encryptor.Ecc
 open Encryptor.Util
-open Encryptor.Blowfish
 
 (* Function to read a file and return its contents *)
 let read_file filename =
@@ -33,9 +32,7 @@ let decrypt_message_rsa ciphertext (d, n) =
 
 (* ECC Functions *)
 let encrypt_message_ecc message base_point public_key a b p n =
-  List.map
-    (fun m -> ECC.encrypt m base_point public_key a b p n)
-    message
+  List.map (fun m -> ECC.encrypt m base_point public_key a b p n) message
 
 let decrypt_message_ecc ciphertext private_key a p =
   List.map (fun (c1, c2) -> ECC.decrypt (c1, c2) private_key a p) ciphertext
@@ -57,12 +54,12 @@ let ask_for_file () =
   Printf.printf "Enter the filename containing the message to encrypt: ";
   let filename = read_line () in
   match read_file filename with
-  | Some content ->
+  | Some content -> (
       let message_ascii = string_to_ascii content in
       Printf.printf "Message as ASCII codes: %s\n"
         (String.concat ", " (List.map string_of_int message_ascii));
 
-      (match method_choice with
+      match method_choice with
       | `RSA ->
           (* RSA Key Generation *)
           let public_key, private_key = Rsa.generate_keys () in
@@ -72,14 +69,17 @@ let ask_for_file () =
             (snd private_key);
 
           (* Encrypt and Decrypt using RSA *)
-          let encrypted_message = encrypt_message_rsa message_ascii public_key in
+          let encrypted_message =
+            encrypt_message_rsa message_ascii public_key
+          in
           Printf.printf "Encrypted message: %s\n"
             (String.concat ", " (List.map string_of_int encrypted_message));
 
-          let decrypted_ascii = decrypt_message_rsa encrypted_message private_key in
+          let decrypted_ascii =
+            decrypt_message_rsa encrypted_message private_key
+          in
           let decrypted_message = ascii_to_string decrypted_ascii in
           Printf.printf "Decrypted message: %s\n" decrypted_message
-
       | `ECC ->
           (* ECC Key Generation *)
           let base_point = ECC.Point (3, 6) in
@@ -91,7 +91,8 @@ let ask_for_file () =
 
           (* Encrypt and Decrypt using ECC *)
           let encrypted_message =
-            encrypt_message_ecc message_ascii base_point keys.ECC.public_key a b p n
+            encrypt_message_ecc message_ascii base_point keys.ECC.public_key a b
+              p n
           in
           Printf.printf "Encrypted message: %s\n"
             (String.concat ", "
