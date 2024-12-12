@@ -16,8 +16,7 @@
 
 (test
  (name test_aes128)
- (libraries base64 ounit2 encryptor bisect_ppx)
- (deps (glob_files_rec ../data/*)))
+ (libraries base64 ounit2 encryptor bisect_ppx))
 
 
 
