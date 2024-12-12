@@ -1,0 +1,11 @@
+lib: [
+  "_build/install/default/lib/encryptor/META"
+  "_build/install/default/lib/encryptor/dune-package"
+  "_build/install/default/lib/encryptor/opam"
+]
+bin: [
+  "_build/install/default/bin/encryptor"
+]
+doc: [
+  "_build/install/default/doc/encryptor/README.md"
+]

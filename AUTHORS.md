@@ -27,4 +27,4 @@ Joshua:
 
 
 Tina: 
-1) I used chat gpt in my ECC test file and with my add and point_to_string functions 
+1) I used chat gpt in my ECC test file and with my add and point_to_string functions, i used chat gpt to help with my ecc.mli
