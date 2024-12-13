@@ -116,11 +116,11 @@ open Util
 module Rsa = struct
   (* Modular exponentiation function *)
   let rec mod_exp base exp modulus =
-    <span data-count="8479">i</span>f exp = 0 then <span data-count="264">1</span>
-    else <span data-count="8215">i</span>f exp mod 2 = 0 then
-      <span data-count="5410">l</span>et half = mod_exp base (exp / 2) modulus in
-      <span data-count="5410">h</span>alf * half mod modulus
-    else <span data-count="2805">b</span>ase * mod_ex<span data-count="2805">p</span> base (exp - 1) modulus mod modulus
+    <span data-count="8759">i</span>f exp = 0 then <span data-count="264">1</span>
+    else <span data-count="8495">i</span>f exp mod 2 = 0 then
+      <span data-count="5453">l</span>et half = mod_exp base (exp / 2) modulus in
+      <span data-count="5453">h</span>alf * half mod modulus
+    else <span data-count="3042">b</span>ase * mod_ex<span data-count="3042">p</span> base (exp - 1) modulus mod modulus
 
   let rsa_encrypt message (e, n) = <span data-count="143">m</span>od_exp message e n
 
@@ -138,8 +138,8 @@ module Rsa = struct
 
     (* Choose a public exponent 'e' such that gcd(e, φ(n)) = 1 *)
     let rec choose_e phi_n =
-      <span data-count="40">l</span>et e = Random.in<span data-count="40">t</span> (phi_n - 2) + 2 in
-      if find_gc<span data-count="40">d</span> e phi_n = 1 then <span data-count="13">e</span> else <span data-count="27">c</span>hoose_e phi_n
+      <span data-count="33">l</span>et e = Random.in<span data-count="33">t</span> (phi_n - 2) + 2 in
+      if find_gc<span data-count="33">d</span> e phi_n = 1 then <span data-count="13">e</span> else <span data-count="20">c</span>hoose_e phi_n
     in
     let e = choose_e phi_n in
 

@@ -18,47 +18,39 @@
       <h2>95.83%</h2>
     </div>
     <div id="navbar">
-      <span class="some-visited" style="top:27.78%"></span>
+      <span class="some-visited" style="top:25.00%"></span>
     </div>
     <div id="report">
       <div id="lines-layer">
         <pre>
 <a id="L1"></a><span > </span>
-<a id="L2"></a><span > </span>
-<a id="L3"></a><span > </span>
-<a id="L4"></a><span > </span>
+<a id="L2"></a><span class="visited"> </span>
+<a id="L3"></a><span class="visited"> </span>
+<a id="L4"></a><span class="visited"> </span>
 <a id="L5"></a><span class="visited"> </span>
-<a id="L6"></a><span class="visited"> </span>
-<a id="L7"></a><span class="visited"> </span>
-<a id="L8"></a><span class="visited"> </span>
+<a id="L6"></a><span > </span>
+<a id="L7"></a><span class="some-visited"> </span>
+<a id="L8"></a><span > </span>
 <a id="L9"></a><span > </span>
-<a id="L10"></a><span class="some-visited"> </span>
-<a id="L11"></a><span > </span>
+<a id="L10"></a><span class="visited"> </span>
+<a id="L11"></a><span class="visited"> </span>
 <a id="L12"></a><span > </span>
 <a id="L13"></a><span > </span>
 <a id="L14"></a><span class="visited"> </span>
 <a id="L15"></a><span class="visited"> </span>
-<a id="L16"></a><span > </span>
+<a id="L16"></a><span class="visited"> </span>
 <a id="L17"></a><span > </span>
 <a id="L18"></a><span > </span>
 <a id="L19"></a><span class="visited"> </span>
 <a id="L20"></a><span class="visited"> </span>
-<a id="L21"></a><span class="visited"> </span>
-<a id="L22"></a><span > </span>
+<a id="L21"></a><span > </span>
+<a id="L22"></a><span class="visited"> </span>
 <a id="L23"></a><span > </span>
 <a id="L24"></a><span > </span>
-<a id="L25"></a><span > </span>
-<a id="L26"></a><span class="visited"> </span>
+<a id="L25"></a><span class="visited"> </span>
+<a id="L26"></a><span > </span>
 <a id="L27"></a><span class="visited"> </span>
-<a id="L28"></a><span > </span>
-<a id="L29"></a><span class="visited"> </span>
-<a id="L30"></a><span > </span>
-<a id="L31"></a><span > </span>
-<a id="L32"></a><span > </span>
-<a id="L33"></a><span class="visited"> </span>
-<a id="L34"></a><span > </span>
-<a id="L35"></a><span class="visited"> </span>
-<a id="L36"></a><span class="visited"> </span>
+<a id="L28"></a><span class="visited"> </span>
 </pre>
       </div>
       <div id="text-layer">
@@ -91,48 +83,32 @@
 <a href="#L26">26</a>
 <a href="#L27">27</a>
 <a href="#L28">28</a>
-<a href="#L29">29</a>
-<a href="#L30">30</a>
-<a href="#L31">31</a>
-<a href="#L32">32</a>
-<a href="#L33">33</a>
-<a href="#L34">34</a>
-<a href="#L35">35</a>
-<a href="#L36">36</a>
 </pre>
-<pre><code class="ocaml">(* lib/util.ml *)
-
-(* Check if a number [n] is prime *)
-let is_prime n =
-  <span data-count="296">l</span>et rec check_divisors d =
-    <span data-count="3715">i</span>f d * d &gt; n then <span data-count="39">t</span>rue
-    else <span data-count="3676">i</span>f n mod d = 0 then <span data-count="257">f</span>alse
-    else <span data-count="3419">c</span>heck_divisors (d + 1)
+<pre><code class="ocaml">let is_prime n =
+  <span data-count="249">l</span>et rec check_divisors d =
+    <span data-count="3710">i</span>f d * d &gt; n then <span data-count="39">t</span>rue
+    else <span data-count="3671">i</span>f n mod d = 0 then <span data-count="210">f</span>alse
+    else <span data-count="3461">c</span>heck_divisors (d + 1)
   in
-  if n &lt; 2 then <span data-count="0">f</span>alse else <span data-count="296">c</span>heck_divisors 2
+  if n &lt; 2 then <span data-count="0">f</span>alse else <span data-count="249">c</span>heck_divisors 2
 
-(* Generate a random prime number in the range [min, max] *)
 let rec generate_prime min max =
-  <span data-count="286">l</span>et prime = Random.in<span data-count="286">t</span> (max - min + 1) + min in
-  if is_prime prime then <span data-count="31">p</span>rime else <span data-count="255">g</span>enerate_prime min max
+  <span data-count="239">l</span>et prime = Random.in<span data-count="239">t</span> (max - min + 1) + min in
+  if is_prime prime then <span data-count="31">p</span>rime else <span data-count="208">g</span>enerate_prime min max
 
-(* Find the GCD of two numbers *)
 let rec find_gcd a b =
-  <span data-count="663">m</span>atch b with
-  | <span data-count="45">0</span> -&gt; a
-  | <span data-count="618">b</span> -&gt; find_gcd b (a mod b)
+  <span data-count="514">m</span>atch b with
+  | <span data-count="38">0</span> -&gt; a
+  | <span data-count="476">b</span> -&gt; find_gcd b (a mod b)
 
-(*Finds modular inverse of a number. Reference:
-  "https://rosettacode.org/wiki/Modular_inverse#Translation_of:_Haskell"*)
 let rec gcd_ext a = function
   | <span data-count="21">0</span> -&gt; (1, 0, a)
-  | <span data-count="215">b</span> -&gt;
+  | <span data-count="223">b</span> -&gt;
       let s, t, g = gcd_ext b (a mod b) in
-      <span data-count="215">(</span>t, s - (a / b * t), g)
+      <span data-count="223">(</span>t, s - (a / b * t), g)
 
-(*Finds modular inverse using gcd_ext helper.*)
 let mod_inv a m =
-  <span data-count="16">l</span>et mk_pos x = <span data-count="15">i</span>f x &lt; 0 then <span data-count="5">x</span> + m else <span data-count="10">x</span> in
+  <span data-count="16">l</span>et mk_pos x = <span data-count="15">i</span>f x &lt; 0 then <span data-count="7">x</span> + m else <span data-count="8">x</span> in
   match gcd_ext a m with
   | <span data-count="15">i</span>, _, 1 -&gt; mk_pos i
   | <span data-count="1">_</span> -&gt; failwith "mod_inv"

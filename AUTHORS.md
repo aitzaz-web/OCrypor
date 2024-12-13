@@ -31,7 +31,7 @@ Joshua:
 
 
 Tina: 
-1) I used chat gpt in my ECC test file and with my add and point_to_string functions, i used chat gpt to help with my ecc.mli
+1) I used chat gpt for: - ECC test file: ecc_point_addition_inverse_test, ecc_point_addition_associative_test _, ecc_encrypt_decrypt_edge_cases_test _, ecc_scalar_mult_boundary_test _, ecc_point_addition_boundary_test _ - ecc.mli : generate_keys, is_on_curve ..I was having problems with ecc.ml and ecc.mli file matching so gpt helped fix that problem - implementing this into the driver - referred to this
 
 Hisham:
 
