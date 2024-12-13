@@ -6,6 +6,7 @@ Aitzaz:
      -Find the ocaml equivalent for the ord function in python that converts letter into numbers (message encoding)
      -Write functions to convert string to ASCII codes and backwards
      - help to write the driver's program: a lot of debugging, incorporating infinity case for ecc workflow for pattern matching exhaustiveness (saved time as would not have to understand the whole ECC algorithm which was implemented by my partner), adding gracefully error messages in case of program failure or incorrect inputs, writing to files after running encryption/decryption on it, Scanf scanning module and its usage, final 5 lines of code to get the main() running on command line input, generating examples of each algorithm use case 
+     - specifications for rsa.mli file functions
 
 2) Youtube video by NeuralNine which implements RSA in python. Used the python as reference to implement the algorithm in Ocaml
 
@@ -17,18 +18,28 @@ Aitzaz:
 
 Joshua:
 1) Used chatgpt for:
-     -defining function to convert between an ascii list and a string in the encryptor test file
-     -writing the int_to_binary and binary_to_int functions in blowfish.ml
-     -string_to_binary, binary_to_string, and binary_string_to_list in blowfish.ml
-     -tracking and adjusting for the amount of padding in encrypt and decrypt
-     -Printf.sprintf "%08d" usage
-     -in assert_failure tests
-     -in encrypt_file_blowfish and decrypt_file_blowfish functions
-     -base_data_dir function for data dir paths
-     -write the test_encrypt_file_blowfish and test_decrypt_file_blowfish test cases
+     - defining function to convert between an ascii list and a string in the encryptor test file
+     - writing the int_to_binary and binary_to_int functions in blowfish.ml
+     - string_to_binary, binary_to_string, and binary_string_to_list in blowfish.ml
+     - tracking and adjusting for the amount of padding in encrypt and decrypt
+     - Printf.sprintf "%08d" usage
+     - in assert_failure tests
+     - in encrypt_file_blowfish and decrypt_file_blowfish functions
+     - base_data_dir function for data dir paths
 
 2) Blowfish reference: https://jacobfilipp.com/DrDobbs/articles/DDJ/1994/9404/9404d/9404d.htm
 
 
 Tina: 
 1) I used chat gpt in my ECC test file and with my add and point_to_string functions, i used chat gpt to help with my ecc.mli
+
+Hisham:
+
+SHA3 Implementation:
+1) keecak constants adopted from https://keccak.team/keccak_specs_summary.html
+2) Used AI to figure out the syntax mistake in my implementation of read_hex_array and read_int64_array
+3) Used AI to help understand implementation of column_parity, theta, and rho offset by prompting it on the maths for understanding and resources on RC2, however implemented myself and
+4) Used AI to help figure out my syntax issue in the implementation of Squeeze
+5) Used AI to help understand the order of the Mixing Rounds, alongside with the documentation found on the web for RC2.
+6) Used AI to write the helper functions in the test file and correct any syntax issues in my implementation to fix the bugs
+7) Used AI in encrypt decrypt to resolve type and syntax issue

@@ -11,6 +11,26 @@ Members:
 
 How to run the program:
 1) run dune build in the terminal
-2) run dune exec bin/main.exe in terminal
-3) Insert sample file: you can use sample file in directory e.g by inputting data/sampleinput2.txt
-4) Program will generate the public key and private key as well as show that the encryption and decryption is working correctly.
+2) run dune exec bin/main.exe encryptor in terminal
+3) Follow the prompts by the program. 
+
+Notes:
+- When entering a filename, add data as prefix so for sampleinput1.txt, you'd do data/sampleinput1.txt.
+- For Blowfish, use the same key for encryption and decryption. You choose the key as the user but it should be
+exactly 8 numerical digits.
+
+
+
+SHA3/RC2
+
+ENCRYPT:
+
+select option 3 followed by 1
+file name (must end with .txt)
+Encrypted file will be saved as: <filename>.txt
+
+DECRYPT:
+
+select option 3 followed by 2
+file name (must end with txt.enc)
+Decrypted file will be saved as: <filename>.txt.enc

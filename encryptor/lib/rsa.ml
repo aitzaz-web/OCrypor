@@ -11,7 +11,6 @@ module Rsa = struct
       half * half mod modulus
     else base * mod_exp base (exp - 1) modulus mod modulus
 
-  (* RSA encryption function *)
   let rsa_encrypt message (e, n) = mod_exp message e n
 
   (* RSA decryption function *)

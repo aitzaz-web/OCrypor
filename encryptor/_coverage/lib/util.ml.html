@@ -104,17 +104,17 @@
 
 (* Check if a number [n] is prime *)
 let is_prime n =
-  <span data-count="295">l</span>et rec check_divisors d =
-    <span data-count="3714">i</span>f d * d &gt; n then <span data-count="39">t</span>rue
-    else <span data-count="3675">i</span>f n mod d = 0 then <span data-count="256">f</span>alse
+  <span data-count="296">l</span>et rec check_divisors d =
+    <span data-count="3715">i</span>f d * d &gt; n then <span data-count="39">t</span>rue
+    else <span data-count="3676">i</span>f n mod d = 0 then <span data-count="257">f</span>alse
     else <span data-count="3419">c</span>heck_divisors (d + 1)
   in
-  if n &lt; 2 then <span data-count="0">f</span>alse else <span data-count="295">c</span>heck_divisors 2
+  if n &lt; 2 then <span data-count="0">f</span>alse else <span data-count="296">c</span>heck_divisors 2
 
 (* Generate a random prime number in the range [min, max] *)
 let rec generate_prime min max =
-  <span data-count="285">l</span>et prime = Random.in<span data-count="285">t</span> (max - min + 1) + min in
-  if is_prime prime then <span data-count="31">p</span>rime else <span data-count="254">g</span>enerate_prime min max
+  <span data-count="286">l</span>et prime = Random.in<span data-count="286">t</span> (max - min + 1) + min in
+  if is_prime prime then <span data-count="31">p</span>rime else <span data-count="255">g</span>enerate_prime min max
 
 (* Find the GCD of two numbers *)
 let rec find_gcd a b =

@@ -25,12 +25,12 @@ git-repo: "https://github.coecis.cornell.edu/drv36/3110-final-project.git"
 demo-video-url: "https://www.youtube.com/watch?v=eSBybJGZoCU"
 # Write a short, attention-grabbing description of your project.
 desc: >
-  Our project is an interactive RSA file encryption system. It supports 
+  Our project is an interactive file encryption system. It supports 
   inputs that are text files. The user is able to choose to encrypt 
-  and decrypt files using the RSA algorithm. This ensures that the contents 
-  of the user's file are safely handled. Our project also includes an 
-  easy-to-use interface via the terminal where the user can choose the file 
-  to be encrypted/decrypted.
+  and decrypt files using the RSA, ECC, Blowfish, SHA3, and AES128 algorithms. 
+  This ensures that the contents of the user's file are safely handled. Our 
+  project also includes an easy-to-use interface via the terminal where the 
+  user can choose the file to be encrypted/decrypted.
 
 
 
