@@ -34,16 +34,3 @@ let mod_inv a m =
   match gcd_ext a m with
   | i, _, 1 -> mk_pos i
   | _ -> failwith "mod_inv"
-
-(* Function to read a file and return its contents *)
-let read_file filename =
-  try
-    let in_channel = open_in filename in
-    let file_content =
-      really_input_string in_channel (in_channel_length in_channel)
-    in
-    close_in in_channel;
-    Some file_content
-  with Sys_error err ->
-    Printf.printf "Error: %s\n" err;
-    None
