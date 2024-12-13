@@ -410,23 +410,17 @@ let rsa_workflow () =
                key format. Use 'd n' format (e.g., 413 3233).\n"))
   | _ -> Printf.printf "Invalid operation for RSA.\n"
 
+(* AES-128 Workflow *)
 let aes128_workflow () =
-  (* Step 1: Ask whether to Encrypt or Decrypt *)
-  Printf.printf "Would you like to (1) Encrypt or (2) Decrypt a file? ";
+  Printf.printf "Choose operation: 1 for Encrypt, 2 for Decrypt: ";
   let operation = read_line () in
-
-  (* Step 2: Ask for the file name *)
   Printf.printf "Enter the filename: ";
   let filename = read_line () in
-
-  (* Step 3: Ask for the AES-128 key *)
   Printf.printf "Enter the AES-128 Key (16 Characters): ";
   let key = read_line () in
   if String.length key <> 16 then (
     Printf.printf "Error: Key must be exactly 16 characters.\n";
     exit 1);
-
-  (* Step 4: Perform the chosen operation *)
   match operation with
   | "1" -> encrypt_file filename key
   | "2" -> decrypt_file filename key

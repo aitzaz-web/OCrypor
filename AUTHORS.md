@@ -43,3 +43,14 @@ SHA3 Implementation:
 5) Used AI to help understand the order of the Mixing Rounds, alongside with the documentation found on the web for RC2.
 6) Used AI to write the helper functions in the test file and correct any syntax issues in my implementation to fix the bugs
 7) Used AI in encrypt decrypt to resolve type and syntax issue
+
+Dylan:
+1) I used ChatGPT to help me learn more about the AES-128 algorithm, as well as to help me develop a rough blueprint for how I wanted to implement it in terms of breaking it up into different helper methods
+2) I used multiple online resources to help me learn more about the specifics of implementing the AES-128 algorithm
+- https://www.geeksforgeeks.org/advanced-encryption-standard-aes/
+- https://www.youtube.com/watch?v=WPz4Kzz6vk4
+- https://www.angelfire.com/biz7/atleast/mix_columns.pdf
+3) I used ChatGPT to aid me while writing some of the methods for AES-128, especially gmul, mix_columns_generic, key_expansion, aes_encrypt_block, aes_decrypt_block, encrypt_file, and decrypt_file
+4) I used ChatGPT to help me generate the necessary CSVs that I needed to use for my algorithm
+5) I used ChatGPT to help me write the "test_encrypt_decrypt_file" test
+6) I used ChatGPT for a lot of debugging assistance
