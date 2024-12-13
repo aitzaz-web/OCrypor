@@ -224,35 +224,32 @@ let decrypt message key =
   remove_padding decrypted_message
 
 let encrypt_file filename key =
-  let input_path = Filename.concat "data" filename in
+  let input_path = filename in
   let ic = open_in_bin input_path in
   let input_length = in_channel_length ic in
   let buffer = really_input_string ic input_length in
   close_in ic;
   Printf.printf "Encrypting file: %s\n" input_path;
   let encrypted_content = encrypt buffer key in
-  let output_path = Filename.concat "data" (filename ^ ".enc") in
+  let output_path = filename ^ ".enc" in
   let oc = open_out_bin output_path in
   output_string oc encrypted_content;
   close_out oc;
   Printf.printf "Encrypted file saved as: %s\n" output_path
 
 let decrypt_file filename key =
-  let input_path = Filename.concat "data" filename in
+  let input_path = filename in
   let ic = open_in_bin input_path in
   let input_length = in_channel_length ic in
   let buffer = really_input_string ic input_length in
   close_in ic;
   Printf.printf "Decrypting file: %s\n" input_path;
-
-  (* Ensure the decrypted file path removes only ".enc" *)
   let base_name =
     if Filename.check_suffix filename ".enc" then
       Filename.chop_suffix filename ".enc"
-    else filename
+    else failwith "Filename must end with '.enc'"
   in
-  let output_path = Filename.concat "data" (base_name ^ ".dec") in
-
+  let output_path = base_name ^ ".dec" in
   let decrypted_content = decrypt buffer key in
   let oc = open_out_bin output_path in
   output_string oc decrypted_content;

@@ -283,12 +283,12 @@ let test_encrypt_file_creates_file _ =
 
 let test_encrypt_decrypt_file _ =
   ensure_data_directory_exists ();
-  let test_filename = "testfile.txt" in
+  let test_filename = "data/testfile.txt" in
   let test_key = "mysecretkey12345" in
   let original_content = "This is a test file." in
-  let test_file_path = Filename.concat "data" test_filename in
-  let encrypted_file_path = Filename.concat "data" (test_filename ^ ".enc") in
-  let decrypted_file_path = Filename.concat "data" (test_filename ^ ".dec") in
+  let test_file_path = test_filename in
+  let encrypted_file_path = test_filename ^ ".enc" in
+  let decrypted_file_path = test_filename ^ ".dec" in
   let read_file_content path =
     let ic = open_in_bin path in
     let content = really_input_string ic (in_channel_length ic) in
@@ -307,7 +307,7 @@ let test_encrypt_decrypt_file _ =
   let oc = open_out_bin test_file_path in
   output_string oc original_content;
   close_out oc;
-  encrypt_file test_filename test_key;
+  encrypt_file test_file_path test_key;
   if Sys.file_exists encrypted_file_path then
     Printf.printf "Encrypted file created: %s\n" encrypted_file_path
   else (
@@ -318,7 +318,7 @@ let test_encrypt_decrypt_file _ =
   String.iter (fun c -> Printf.printf "%02x " (Char.code c)) encrypted_content;
   Printf.printf "\n";
   Printf.printf "Expected decrypted file path: %s\n" decrypted_file_path;
-  decrypt_file (test_filename ^ ".enc") test_key;
+  decrypt_file encrypted_file_path test_key;
   if Sys.file_exists decrypted_file_path then
     Printf.printf "Decrypted file created: %s\n" decrypted_file_path
   else (
