@@ -10,7 +10,7 @@ Members:
 
 
 How to run the program:
-1) run dune build in the terminal
+1) go into the encryptor directory and run dune build in the terminal
 2) run dune exec bin/main.exe encryptor in terminal
 3) Follow the prompts by the program. 
 
