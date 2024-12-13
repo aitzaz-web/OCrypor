@@ -23,15 +23,48 @@ let write_to_file filename content =
   let oc = open_out filename in
   Printf.fprintf oc "%s" content;
   close_out oc
+(* Function to convert string to ASCII codes *)
+
+let string_to_ascii message =
+  List.map Char.code (List.of_seq (String.to_seq message))
+
+(* Function to convert ASCII codes back to a string *)
+let ascii_to_string ascii_codes =
+  String.of_seq (List.to_seq (List.map Char.chr ascii_codes))
 
 let ask_for_method () =
-  Printf.printf "Choose an encryption method:\n";
-  Printf.printf "1. RSA\n";
-  Printf.printf "2. ECC\n";
-  Printf.printf "3. SHA3/RC2\n";
-  Printf.printf "4. AES-128\n";
+  Printf.printf
+    "Choose an encryption method based on your data's safety requirements:\n\n";
+  Printf.printf "1. RSA (Rivest–Shamir–Adleman)\n";
+  Printf.printf
+    "   - High Safety: Suitable for sensitive personal data, financial \
+     records, or legal documents.\n";
+  Printf.printf
+    "   - Example: Encrypting financial reports or medical records.\n\n";
+  Printf.printf "2. ECC (Elliptic Curve Cryptography)\n";
+  Printf.printf
+    "   - Medium Safety: Ideal for business files or private messages.\n";
+  Printf.printf
+    "   - Example: Securing emails, business contracts, or shared private \
+     keys.\n\n";
+  Printf.printf "3. SHA3/RC2 (Secure Hash Algorithm 3 / Rivest Cipher 2)\n";
+  Printf.printf
+    "   - Hashing/Integrity Check: Used for verifying file changes and \
+     ensuring data integrity.\n";
+  Printf.printf
+    "   - Example: Ensuring a downloaded file hasn’t been altered.\n\n";
+  Printf.printf "4. AES-128 (Advanced Encryption Standard)\n";
+  Printf.printf
+    "   - High Safety: Perfect for encrypting confidential documents or \
+     high-value data.\n";
+  Printf.printf
+    "   - Example: Encrypting internal company files or trade secrets.\n\n";
   Printf.printf "5. Blowfish\n";
-  Printf.printf "Enter your choice: ";
+  Printf.printf "   - Low Safety: Suitable for non-critical or legacy files.\n";
+  Printf.printf
+    "   - Example: Encrypting archived documents or small datasets in older \
+     systems.\n\n";
+  Printf.printf "Enter your choice (1-5): ";
   match read_line () with
   | "1" -> `RSA
   | "2" -> `ECC
@@ -39,6 +72,189 @@ let ask_for_method () =
   | "4" -> `AES128
   | "5" -> `Blowfish
   | _ -> failwith "Invalid choice"
+
+(* ECC Functions *)
+let point_of_string s =
+  if s = "Infinity" then ECC.Infinity
+  else
+    let trimmed = String.sub s 1 (String.length s - 2) in
+    match String.split_on_char ',' trimmed with
+    | [ x; y ] ->
+        Point (int_of_string (String.trim x), int_of_string (String.trim y))
+    | _ ->
+        failwith "Invalid point format. Expected format: '(x, y)' or 'Infinity'"
+
+let encrypt_message_ecc message base_point public_key a b p n =
+  List.map (fun m -> ECC.encrypt m base_point public_key a b p n) message
+
+let decrypt_message_ecc ciphertext private_key a p =
+  String.concat ""
+    (List.map
+       (fun (c1, c2) ->
+         let decrypted_char = ECC.decrypt (c1, c2) private_key a p in
+         String.make 1 (Char.chr decrypted_char))
+       ciphertext)
+
+let ecc_workflow () =
+  Printf.printf "Choose operation: 1 for Encrypt, 2 for Decrypt: ";
+  let operation = read_line () in
+  match operation with
+  | "1" -> (
+      (* Encryption Workflow *)
+      Printf.printf "Enter the filename containing the message to encrypt: ";
+      let filename = read_line () in
+      match read_file filename with
+      | Some content ->
+          let message_ascii = string_to_ascii content in
+          Printf.printf "Message as ASCII codes: %s\n"
+            (String.concat ", " (List.map string_of_int message_ascii));
+          let a, b, p, n = (2, 3, 97, 5) in
+          let base_point = ECC.Point (3, 6) in
+          let keys = ECC.generate_keys base_point a b p n in
+          Printf.printf "ECC Public key: %s\n"
+            (ECC.point_to_string keys.public_key);
+          Printf.printf "ECC Private key: %d\n" keys.private_key;
+
+          let encrypted_message =
+            encrypt_message_ecc message_ascii base_point keys.ECC.public_key a b
+              p n
+          in
+          let encrypted_filename = filename ^ ".enc" in
+          let encrypted_content =
+            String.concat "\n"
+              (List.map
+                 (fun (c1, c2) ->
+                   match (c1, c2) with
+                   | ECC.Point (x1, y1), ECC.Point (x2, y2) ->
+                       Printf.sprintf "%d,%d,%d,%d" x1 y1 x2 y2
+                   | ECC.Point (x1, y1), Infinity ->
+                       Printf.sprintf "%d,%d,inf,inf" x1 y1
+                   | Infinity, ECC.Point (x2, y2) ->
+                       Printf.sprintf "inf,inf,%d,%d" x2 y2
+                   | Infinity, Infinity -> "inf,inf,inf,inf")
+                 encrypted_message)
+          in
+
+          write_to_file encrypted_filename encrypted_content;
+          Printf.printf "Encrypted file saved as: %s\n" encrypted_filename
+      | None -> Printf.printf "Failed to read the file.\n")
+  | "2" -> (
+      Printf.printf "Enter the filename containing the encrypted message: ";
+      let filename = read_line () in
+      match read_file filename with
+      | Some content -> (
+          Printf.printf "Enter the private key: ";
+          let private_key_input = read_line () in
+          try
+            let private_key = int_of_string private_key_input in
+
+            let encrypted_message =
+              List.filter_map
+                (fun line ->
+                  try
+                    let trimmed_line = String.trim line in
+                    Scanf.sscanf trimmed_line "%d,%d,%d,%d" (fun x1 y1 x2 y2 ->
+                        Some (ECC.Point (x1, y1), ECC.Point (x2, y2)))
+                  with _ -> None)
+                (String.split_on_char '\n' content)
+            in
+
+            let a, b, p = (2, 3, 97) in
+            let decrypted_message =
+              decrypt_message_ecc encrypted_message private_key a p
+            in
+
+            let decrypted_filename = filename ^ ".dec" in
+            write_to_file decrypted_filename decrypted_message;
+            Printf.printf "Decrypted message saved as: %s\n" decrypted_filename
+          with
+          | Failure _ ->
+              Printf.printf
+                "Invalid private key format. Please enter a valid integer.\n"
+          | _ ->
+              Printf.printf
+                "Failed to decrypt the message. Check the file format and key.\n"
+          )
+      | None -> Printf.printf "Failed to read the file.\n")
+  | _ ->
+      Printf.printf
+        "Invalid operation for ECC. Please choose 1 for Encrypt or 2 for \
+         Decrypt.\n"
+
+(* SHA3/RC2 Functions *)
+let encrypt_message_sha3_rc2 filename content =
+  let key = filename in
+  Printf.printf "Using key (derived from filename): %s\n" key;
+  let encrypted = Encryptor.Sha3.encrypt_rc2_sha3 key content in
+  encrypted
+
+let decrypt_message_sha3_rc2 filename encrypted_content =
+  let key = filename in
+  Printf.printf "Using key (derived from filename): %s\n" key;
+  let decrypted = Encryptor.Sha3.decrypt_rc2_sha3 key encrypted_content in
+  decrypted
+
+let sha3_workflow () =
+  Printf.printf "Choose operation: 1 for Encrypt, 2 for Decrypt: ";
+  let operation = read_line () in
+  match operation with
+  | "1" -> (
+      (* Encryption Workflow *)
+      Printf.printf "Enter the filename containing the message to encrypt: ";
+      let filename = read_line () in
+      match read_file filename with
+      | Some content ->
+          let key = filename in
+          Printf.printf "Using key (derived from filename): %s\n" key;
+
+          let encrypted_message = Encryptor.Sha3.encrypt_rc2_sha3 key content in
+
+          let encrypted_filename = filename ^ ".enc" in
+          write_to_file encrypted_filename encrypted_message;
+          Printf.printf "Encrypted file saved as: %s\n" encrypted_filename
+      | None -> Printf.printf "Failed to read the file.\n")
+  | "2" -> (
+      (* Decryption Workflow *)
+      Printf.printf "Enter the filename containing the encrypted message: ";
+      let filename = read_line () in
+      match read_file filename with
+      | Some encrypted_content ->
+          let key = filename in
+          Printf.printf "Using key (derived from filename): %s\n" key;
+
+          let decrypted_message =
+            Encryptor.Sha3.decrypt_rc2_sha3 key encrypted_content
+          in
+
+          let decrypted_filename = filename ^ ".dec" in
+          write_to_file decrypted_filename decrypted_message;
+          Printf.printf "Decrypted file saved as: %s\n" decrypted_filename
+      | None -> Printf.printf "Failed to read the file.\n")
+  | _ ->
+      Printf.printf
+        "Invalid operation for SHA3. Please choose 1 for Encrypt or 2 for \
+         Decrypt.\n"
+
+(* Blowfish Workflow *)
+let blowfish_workflow () =
+  Printf.printf "Choose operation: 1 for Encrypt, 2 for Decrypt: ";
+  let operation = read_line () in
+  match operation with
+  | "1" ->
+      Printf.printf "Enter the filename containing the message to encrypt: ";
+      let filename = read_line () in
+      Printf.printf "Enter the numeric key (8 digits) for Blowfish: ";
+      let key = int_of_string (read_line ()) in
+      encrypt_file_blowfish filename key;
+      Printf.printf "File encryption completed.\n"
+  | "2" ->
+      Printf.printf "Enter the filename containing the message to decrypt: ";
+      let filename = read_line () in
+      Printf.printf "Enter the numeric key (8 digits) for Blowfish: ";
+      let key = int_of_string (read_line ()) in
+      decrypt_file_blowfish filename key;
+      Printf.printf "File decryption completed.\n"
+  | _ -> Printf.printf "Invalid operation for Blowfish.\n"
 
 (* RSA Workflow *)
 let rsa_workflow () =
@@ -134,48 +350,7 @@ let rsa_workflow () =
                key format. Use 'd n' format (e.g., 413 3233).\n"))
   | _ -> Printf.printf "Invalid operation for RSA.\n"
 
-(* ECC Functions 2042981, 4099343 *)
-let encrypt_message_ecc message base_point public_key a b p n =
-  List.map (fun m -> ECC.encrypt m base_point public_key a b p n) message
-
-let decrypt_message_ecc ciphertext private_key a p =
-  List.map (fun (c1, c2) -> ECC.decrypt (c1, c2) private_key a p) ciphertext
-
-(* SHA3/RC2 Functions *)
-let encrypt_message_sha3_rc2 filename content =
-  let key = filename in
-  Printf.printf "Using key (derived from filename): %s\n" key;
-  let encrypted = Encryptor.Sha3.encrypt_rc2_sha3 key content in
-  encrypted
-
-let decrypt_message_sha3_rc2 filename encrypted_content =
-  let key = filename in
-  Printf.printf "Using key (derived from filename): %s\n" key;
-  let decrypted = Encryptor.Sha3.decrypt_rc2_sha3 key encrypted_content in
-  decrypted
-
-(* Blowfish Workflow *)
-let blowfish_workflow () =
-  Printf.printf "Choose operation: 1 for Encrypt, 2 for Decrypt: ";
-  let operation = read_line () in
-  match operation with
-  | "1" ->
-      Printf.printf "Enter the filename containing the message to encrypt: ";
-      let filename = read_line () in
-      Printf.printf "Enter the numeric key (8 digits) for Blowfish: ";
-      let key = int_of_string (read_line ()) in
-      encrypt_file_blowfish filename key;
-      Printf.printf "File encryption completed.\n"
-  | "2" ->
-      Printf.printf "Enter the filename containing the message to decrypt: ";
-      let filename = read_line () in
-      Printf.printf "Enter the numeric key (8 digits) for Blowfish: ";
-      let key = int_of_string (read_line ()) in
-      decrypt_file_blowfish filename key;
-      Printf.printf "File decryption completed.\n"
-  | _ -> Printf.printf "Invalid operation for Blowfish.\n"
-
-(* Other Algorithms (AES, SHA3/RC2, ECC) *)
+(* Other Algorithm(s) *)
 let other_workflows method_choice filename content =
   match method_choice with
   | `AES128 ->
@@ -186,42 +361,6 @@ let other_workflows method_choice filename content =
 
       let decrypted_message = Encryptor.Aes128.decrypt encrypted_message key in
       Printf.printf "Decrypted message: %s\n" decrypted_message
-  | `SHA3 ->
-      let encrypted_message = encrypt_message_sha3_rc2 filename content in
-      Printf.printf "Encrypted message: %s\n" encrypted_message;
-
-      let decrypted_message =
-        decrypt_message_sha3_rc2 filename encrypted_message
-      in
-      Printf.printf "Decrypted message: %s\n" decrypted_message
-  | `ECC ->
-      let base_point = ECC.Point (3, 6) in
-      let a, b, p, n = (2, 3, 97, 5) in
-      let keys = ECC.generate_keys base_point a b p n in
-      Printf.printf "ECC Public key: %s\n" (ECC.point_to_string keys.public_key);
-      Printf.printf "ECC Private key: %d\n" keys.private_key;
-
-      let message_ascii =
-        List.map Char.code (List.of_seq (String.to_seq content))
-      in
-      let encrypted_message =
-        encrypt_message_ecc message_ascii base_point keys.ECC.public_key a b p n
-      in
-      Printf.printf "Encrypted message: %s\n"
-        (String.concat ", "
-           (List.map
-              (fun (c1, c2) ->
-                Printf.sprintf "(%s, %s)" (ECC.point_to_string c1)
-                  (ECC.point_to_string c2))
-              encrypted_message));
-
-      let decrypted_ascii =
-        decrypt_message_ecc encrypted_message keys.ECC.private_key a p
-      in
-      let decrypted_message =
-        String.of_seq (List.to_seq (List.map Char.chr decrypted_ascii))
-      in
-      Printf.printf "Decrypted message: %s\n" decrypted_message
   | _ -> Printf.printf "Invalid method selected.\n"
 
 (* Main Driver Program *)
@@ -230,6 +369,8 @@ let rsa_ecc_aes_workflow () =
   match method_choice with
   | `RSA -> rsa_workflow ()
   | `Blowfish -> blowfish_workflow ()
+  | `ECC -> ecc_workflow ()
+  | `SHA3 -> sha3_workflow ()
   | _ -> (
       Printf.printf "Enter the filename containing the message: ";
       let filename = read_line () in

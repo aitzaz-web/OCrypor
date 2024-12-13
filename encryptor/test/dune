@@ -1,5 +1,5 @@
 (test
- (name test_encryptor)
+ (name test_rsa)
  (libraries ounit2 encryptor))
 
 (test

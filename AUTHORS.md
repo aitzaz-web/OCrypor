@@ -5,12 +5,15 @@ Aitzaz:
      -Define function to read file from terminal
      -Find the ocaml equivalent for the ord function in python that converts letter into numbers (message encoding)
      -Write functions to convert string to ASCII codes and backwards
+     - help to write the driver's program: a lot of debugging, incorporating infinity case for ecc workflow for pattern matching exhaustiveness (saved time as would not have to understand the whole ECC algorithm which was implemented by my partner), adding gracefully error messages in case of program failure or incorrect inputs, writing to files after running encryption/decryption on it, Scanf scanning module and its usage, final 5 lines of code to get the main() running on command line input, generating examples of each algorithm use case 
 
 2) Youtube video by NeuralNine which implements RSA in python. Used the python as reference to implement the algorithm in Ocaml
 
 3) Reference for modular inverse function: "https://rosettacode.org/wiki/Modular_inverse#Translation_of:_Haskell"
 
 4) Obtained 1000 word sample essay for sampleinput3.txt from "https://www.customwritings.com/howtowrite/post/1000-words-essay-sample/"
+
+
 
 Joshua:
 1) Used chatgpt for:
