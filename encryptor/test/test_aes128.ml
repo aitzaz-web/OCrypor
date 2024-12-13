@@ -1,29 +1,38 @@
 open OUnit2
 open Encryptor.Aes128
 
+(* [test_pad_block_1] tests the pad_block function for an empty string *)
 let test_pad_block_1 _ =
   let str = "" in
   assert_equal (pad_block str)
     "\016\016\016\016\016\016\016\016\016\016\016\016\016\016\016\016"
 
+(* [test_pad_block_2] tests the pad_block function for a string with a length of
+   16 *)
 let test_pad_block_2 _ =
   let str = "abcdefghijklmnop" in
   assert_equal (pad_block str) "abcdefghijklmnop"
 
+(* [test_split_into_blocks_encrypt_1] tests splitting a single 16-character
+   block *)
 let test_split_into_blocks_encrypt_1 _ =
   let str = "abcdefghijklmnop" in
   assert_equal (split_into_blocks_encrypt str) [ "abcdefghijklmnop" ]
 
+(* [test_split_into_blocks_encrypt_2] tests splitting a string into multiple
+   blocks with padding *)
 let test_split_into_blocks_encrypt_2 _ =
   let str = "abcdefghijklmnopqrstuvwxyz" in
   assert_equal
     (split_into_blocks_encrypt str)
     [ "abcdefghijklmnop"; "qrstuvwxyz\006\006\006\006\006\006" ]
 
+(* [test_split_into_blocks_encrypt_3] tests splitting an empty string *)
 let test_split_into_blocks_encrypt_3 _ =
   let str = "" in
   assert_equal (split_into_blocks_encrypt str) []
 
+(* [test_string_to_state_1] tests converting a string into a state matrix *)
 let test_string_to_state_1 _ =
   let str = "abcdefghijklmnop" in
   let actual = string_to_state str in
@@ -35,8 +44,6 @@ let test_string_to_state_1 _ =
       [| 109; 110; 111; 112 |];
     |]
   in
-
-  (* Print actual and expected for debugging *)
   Printf.printf "Expected:\n";
   Array.iter
     (fun row ->
@@ -53,6 +60,8 @@ let test_string_to_state_1 _ =
 
   assert_equal expected actual
 
+(* [test_string_to_state_2] tests converting another string into a state
+   matrix *)
 let test_string_to_state_2 _ =
   let str = "aes128issocool!!" in
   assert_equal (string_to_state str)
@@ -63,6 +72,7 @@ let test_string_to_state_2 _ =
       [| 111; 108; 33; 33 |];
     |]
 
+(* [test_sub_bytes_1] tests the SubBytes transformation *)
 let test_sub_bytes_1 _ =
   let state =
     [|
@@ -82,6 +92,7 @@ let test_sub_bytes_1 _ =
   in
   assert_equal (sub_bytes state) expected
 
+(* [test_inv_sub_bytes_1] tests the inverse SubBytes transformation *)
 let test_inv_sub_bytes_1 _ =
   let state =
     [|
@@ -101,6 +112,7 @@ let test_inv_sub_bytes_1 _ =
   in
   assert_equal (inv_sub_bytes state) expected
 
+(* [test_shift_rows_1] tests the ShiftRows transformation *)
 let test_shift_rows_1 _ =
   let state =
     [|
@@ -120,6 +132,7 @@ let test_shift_rows_1 _ =
   in
   assert_equal (shift_rows state) expected
 
+(* [test_shift_rows_2] tests ShiftRows with a different state *)
 let test_shift_rows_2 _ =
   let state =
     [|
@@ -139,6 +152,7 @@ let test_shift_rows_2 _ =
   in
   assert_equal (shift_rows state) expected
 
+(* [test_inv_shift_rows_1] tests the inverse ShiftRows transformation *)
 let test_inv_shift_rows_1 _ =
   let state =
     [|
@@ -158,14 +172,19 @@ let test_inv_shift_rows_1 _ =
   in
   assert_equal (inv_shift_rows state) expected
 
+(* [test_transpose] tests matrix transposition *)
 let test_transpose _ =
   let matrix1 = [| [| 1; 2; 3 |]; [| 4; 5; 6 |] |] in
   let expected1 = [| [| 1; 4 |]; [| 2; 5 |]; [| 3; 6 |] |] in
   assert_equal expected1 (transpose matrix1)
 
+(* [test_gmul_1] tests Galois Field multiplication for specific values *)
 let test_gmul_1 _ = assert_equal (gmul 87 131) 193
+
+(* [test_gmul_2] tests Galois Field multiplication with a small multiplier *)
 let test_gmul_2 _ = assert_equal (gmul 87 2) 174
 
+(* [test_gmul_cases] tests multiple Galois Field multiplication cases *)
 let test_gmul_cases _ =
   assert_equal (gmul 0x57 0x83) 0xc1;
   assert_equal (gmul 0x57 0x01) 0x57;
@@ -173,6 +192,7 @@ let test_gmul_cases _ =
   assert_equal (gmul 0x57 0x03) 0xf9;
   assert_equal (gmul 0x80 0x02) 0x1b
 
+(* [test_all_mix_columns_inverse] tests MixColumns and its inverse *)
 let test_all_mix_columns_inverse _ =
   let original_state =
     [|
@@ -207,6 +227,8 @@ let csv_to_3d_array filename =
   in
   Array.of_list round_keys
 
+(* [test_aes_encrypt_block] tests that the AES encryption of a block changes the
+   block content *)
 let test_aes_encrypt_block _ =
   let key = "abcdefghabcdefghi" in
   let round_keys = key_expansion key in
@@ -214,6 +236,8 @@ let test_aes_encrypt_block _ =
   let encrypted_block = aes_encrypt_block block round_keys in
   assert (encrypted_block <> block)
 
+(* [test_aes_decrypt_block] tests that AES decryption restores the original
+   block *)
 let test_aes_decrypt_block _ =
   let key = "imonlyhumanafter" in
   let round_keys = key_expansion key in
@@ -222,12 +246,15 @@ let test_aes_decrypt_block _ =
   let decrypted_block = aes_decrypt_block encrypted_block round_keys in
   assert_equal decrypted_block block
 
+(* [test_encrypt] tests that the encrypt function alters the input message *)
 let test_encrypt _ =
   let key = "imonlyhumanafter" in
   let message = "abcdefghabcdefghi" in
   let encrypted_message = encrypt message key in
   assert (encrypted_message <> message)
 
+(* [test_decrypt] tests that the decrypt function restores the original
+   message *)
 let test_decrypt _ =
   let key = "wowthisissocool!" in
   let message = "abcdefghijklmnopqrstuvwxyz" in
@@ -238,6 +265,8 @@ let test_decrypt _ =
 let ensure_data_directory_exists () =
   if not (Sys.file_exists "data") then Sys.mkdir "data" 0o755
 
+(* [test_encrypt_file_creates_file] tests that encrypting a file generates an
+   encrypted output file *)
 let test_encrypt_file_creates_file _ =
   ensure_data_directory_exists ();
   let test_filename = "testfile.txt" in
