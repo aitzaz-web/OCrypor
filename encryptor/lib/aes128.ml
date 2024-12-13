@@ -39,7 +39,7 @@ let base_data_dir =
     if Sys.file_exists (Filename.concat dir "dune-project") then dir
     else find_root (Filename.dirname dir)
   in
-  find_root (Sys.getcwd ()) ^ "/encryptor/data/"
+  find_root (Sys.getcwd ()) ^ "/data/"
 
 let s_box = csv_to_array (base_data_dir ^ "sbox.csv")
 let inv_s_box = csv_to_array (base_data_dir ^ "inv_sbox.csv")
