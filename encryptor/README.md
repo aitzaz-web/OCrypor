@@ -18,6 +18,7 @@ Notes:
 - When entering a filename, add data as prefix so for sampleinput1.txt, you'd do data/sampleinput1.txt.
 - For Blowfish, use the same key for encryption and decryption. You choose the key as the user but it should be
 exactly 8 numerical digits.
+- For AES-128, make sure to use the same key for encryption and decryption. Additionally, for data/sampleinput1.txt, use the key "wowthisissocool!", and for data/sampleinput2.txt, use the key "examplekey123456"
 
 
 

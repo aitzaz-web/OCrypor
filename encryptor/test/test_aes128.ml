@@ -286,49 +286,68 @@ let test_encrypt_decrypt_file _ =
   let test_filename = "data/testfile.txt" in
   let test_key = "mysecretkey12345" in
   let original_content = "This is a test file." in
-  let test_file_path = test_filename in
-  let encrypted_file_path = test_filename ^ ".enc" in
-  let decrypted_file_path = test_filename ^ ".dec" in
+  let encrypted_file_path = test_filename ^ ".enc.aes" in
+  let decrypted_file_path = test_filename ^ ".enc.aes.dec" in
+
+  (* Helper function to read file content *)
   let read_file_content path =
     let ic = open_in_bin path in
     let content = really_input_string ic (in_channel_length ic) in
     close_in ic;
     content
   in
+
+  (* Helper function to clean up test files *)
   let clean_test_files () =
     List.iter
       (fun path ->
         if Sys.file_exists path then (
           Printf.printf "Removing file: %s\n" path;
           Sys.remove path))
-      [ test_file_path; encrypted_file_path; decrypted_file_path ]
+      [ test_filename; encrypted_file_path; decrypted_file_path ]
   in
+
+  (* Clean up any pre-existing test files *)
   clean_test_files ();
-  let oc = open_out_bin test_file_path in
+
+  (* Create the test file *)
+  let oc = open_out_bin test_filename in
   output_string oc original_content;
   close_out oc;
-  encrypt_file test_file_path test_key;
+
+  (* Encrypt the file *)
+  encrypt_file test_filename test_key;
+
+  (* Check if the encrypted file exists *)
   if Sys.file_exists encrypted_file_path then
     Printf.printf "Encrypted file created: %s\n" encrypted_file_path
   else (
     Printf.printf "Encrypted file not found: %s\n" encrypted_file_path;
     assert false);
+
+  (* Read and display encrypted content *)
   let encrypted_content = read_file_content encrypted_file_path in
   Printf.printf "Encrypted content (hex): ";
   String.iter (fun c -> Printf.printf "%02x " (Char.code c)) encrypted_content;
   Printf.printf "\n";
-  Printf.printf "Expected decrypted file path: %s\n" decrypted_file_path;
+
+  (* Decrypt the file *)
   decrypt_file encrypted_file_path test_key;
+
+  (* Check if the decrypted file exists *)
   if Sys.file_exists decrypted_file_path then
     Printf.printf "Decrypted file created: %s\n" decrypted_file_path
   else (
     Printf.printf "Decrypted file not found: %s\n" decrypted_file_path;
     assert false);
+
+  (* Verify the decrypted content matches the original content *)
   let decrypted_content = read_file_content decrypted_file_path in
   Printf.printf "Decrypted content: %s\n" decrypted_content;
   flush stdout;
   Printf.printf "Original content: %s\n" original_content;
   assert_equal original_content decrypted_content;
+
   Printf.printf "Cleaning up test files...\n";
   clean_test_files ();
   Printf.printf "test_encrypt_decrypt_file passed.\n"

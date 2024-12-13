@@ -231,7 +231,7 @@ let encrypt_file filename key =
   close_in ic;
   Printf.printf "Encrypting file: %s\n" input_path;
   let encrypted_content = encrypt buffer key in
-  let output_path = filename ^ ".enc" in
+  let output_path = filename ^ ".enc.aes" in
   let oc = open_out_bin output_path in
   output_string oc encrypted_content;
   close_out oc;
@@ -245,11 +245,11 @@ let decrypt_file filename key =
   close_in ic;
   Printf.printf "Decrypting file: %s\n" input_path;
   let base_name =
-    if Filename.check_suffix filename ".enc" then
-      Filename.chop_suffix filename ".enc"
-    else failwith "Filename must end with '.enc'"
+    if Filename.check_suffix filename ".enc.aes" then
+      Filename.chop_suffix filename ".enc.aes"
+    else failwith "Filename must end with '.enc.aes'"
   in
-  let output_path = base_name ^ ".dec" in
+  let output_path = base_name ^ ".enc.aes.dec" in
   let decrypted_content = decrypt buffer key in
   let oc = open_out_bin output_path in
   output_string oc decrypted_content;

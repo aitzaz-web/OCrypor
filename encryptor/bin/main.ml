@@ -23,7 +23,7 @@ let encrypt_file_blowfish filename key =
       List.map (fun chunk -> encrypt chunk key) message_chunks
     in
     let encrypted_message = String.concat "" encrypted_chunks in
-    let encrypted_filename = filename ^ ".enc" in
+    let encrypted_filename = filename ^ ".enc.blowfish" in
     BatFile.with_file_out encrypted_filename (fun out ->
         BatIO.nwrite out encrypted_message);
     print_endline ("File encrypted successfully. Saved as " ^ encrypted_filename)
@@ -57,7 +57,7 @@ let decrypt_file_blowfish filename key =
       List.map (fun chunk -> decrypt chunk key) encrypted_chunks_split
     in
     let decrypted_message = String.concat "" decrypted_chunks in
-    let decrypted_filename = filename ^ ".dec" in
+    let decrypted_filename = filename ^ ".dec.blowfish" in
     BatFile.with_file_out decrypted_filename (fun out ->
         BatIO.nwrite out decrypted_message);
     print_endline ("File decrypted successfully. Saved as " ^ decrypted_filename)
@@ -179,7 +179,7 @@ let ecc_workflow () =
             encrypt_message_ecc message_ascii base_point keys.ECC.public_key a b
               p n
           in
-          let encrypted_filename = filename ^ ".enc" in
+          let encrypted_filename = filename ^ ".enc.ecc" in
           let encrypted_content =
             String.concat "\n"
               (List.map
@@ -269,7 +269,7 @@ let sha3_workflow () =
 
           let encrypted_message = Encryptor.Sha3.encrypt_rc2_sha3 key content in
 
-          let encrypted_filename = filename ^ ".enc" in
+          let encrypted_filename = filename ^ ".enc.sha" in
           write_to_file encrypted_filename encrypted_message;
           Printf.printf "Encrypted file saved as: %s\n" encrypted_filename
       | None -> Printf.printf "Failed to read the file.\n")
@@ -342,7 +342,7 @@ let rsa_workflow () =
                   let encrypted_message =
                     List.map (fun m -> Rsa.rsa_encrypt m (e, n)) message_ascii
                   in
-                  let encrypted_filename = filename ^ ".enc" in
+                  let encrypted_filename = filename ^ ".enc.rsa" in
                   let encrypted_content =
                     String.concat " " (List.map string_of_int encrypted_message)
                   in
@@ -371,7 +371,7 @@ let rsa_workflow () =
             let encrypted_message =
               List.map (fun m -> Rsa.rsa_encrypt m public_key) message_ascii
             in
-            let encrypted_filename = filename ^ ".enc" in
+            let encrypted_filename = filename ^ ".enc.rsa" in
             let encrypted_content =
               String.concat " " (List.map string_of_int encrypted_message)
             in
