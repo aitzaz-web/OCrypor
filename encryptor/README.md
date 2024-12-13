@@ -12,4 +12,9 @@ Members:
 How to run the program:
 1) run dune build in the terminal
 2) run dune exec bin/main.exe encryptor in terminal
-3) Follow the prompts by the program. When entering a filename, add data as prefix so for sampleinput1.txt, you'd do data/sampleinput1.txt.
+3) Follow the prompts by the program. 
+
+Notes:
+- When entering a filename, add data as prefix so for sampleinput1.txt, you'd do data/sampleinput1.txt.
+- For Blowfish, use the same key for encryption and decryption. You choose the key as the user but it should be
+exactly 8 numerical digits.
