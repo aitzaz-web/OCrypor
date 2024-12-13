@@ -33,12 +33,13 @@ let csv_to_array filename =
        (fun s -> int_of_string (String.trim s))
        (List.flatten (Csv.load filename)))
 
+(**[base_data_dir] ensures that file paths to the data directory are correct.*)
 let base_data_dir =
   let rec find_root dir =
     if Sys.file_exists (Filename.concat dir "dune-project") then dir
     else find_root (Filename.dirname dir)
   in
-  find_root (Sys.getcwd ()) ^ "/data/"
+  find_root (Sys.getcwd ()) ^ "/encryptor/data/"
 
 let s_box = csv_to_array (base_data_dir ^ "sbox.csv")
 let inv_s_box = csv_to_array (base_data_dir ^ "inv_sbox.csv")
