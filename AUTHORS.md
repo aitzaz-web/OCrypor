@@ -32,3 +32,14 @@ Joshua:
 
 Tina: 
 1) I used chat gpt in my ECC test file and with my add and point_to_string functions, i used chat gpt to help with my ecc.mli
+
+Hisham:
+
+SHA3 Implementation:
+1) keecak constants adopted from https://keccak.team/keccak_specs_summary.html
+2) Used AI to figure out the syntax mistake in my implementation of read_hex_array and read_int64_array
+3) Used AI to help understand implementation of column_parity, theta, and rho offset by prompting it on the maths for understanding and resources on RC2, however implemented myself and
+4) Used AI to help figure out my syntax issue in the implementation of Squeeze
+5) Used AI to help understand the order of the Mixing Rounds, alongside with the documentation found on the web for RC2.
+6) Used AI to write the helper functions in the test file and correct any syntax issues in my implementation to fix the bugs
+7) Used AI in encrypt decrypt to resolve type and syntax issue
