@@ -118,40 +118,40 @@ open Util
 module Rsa = struct
   (* Modular exponentiation function *)
   let rec mod_exp base exp modulus =
-    <span data-count="494">i</span>f exp = 0 then <span data-count="19">1</span>
-    else <span data-count="475">i</span>f exp mod 2 = 0 then
-      <span data-count="293">l</span>et half = mod_exp base (exp / 2) modulus in
-      <span data-count="293">h</span>alf * half mod modulus
-    else <span data-count="182">b</span>ase * mod_ex<span data-count="182">p</span> base (exp - 1) modulus mod modulus
+    <span data-count="8499">i</span>f exp = 0 then <span data-count="264">1</span>
+    else <span data-count="8235">i</span>f exp mod 2 = 0 then
+      <span data-count="5190">l</span>et half = mod_exp base (exp / 2) modulus in
+      <span data-count="5190">h</span>alf * half mod modulus
+    else <span data-count="3045">b</span>ase * mod_ex<span data-count="3045">p</span> base (exp - 1) modulus mod modulus
 
   (* RSA encryption function *)
-  let rsa_encrypt message (e, n) = <span data-count="8">m</span>od_exp message e n
+  let rsa_encrypt message (e, n) = <span data-count="143">m</span>od_exp message e n
 
   (* RSA decryption function *)
-  let rsa_decrypt ciphertext (d, n) = <span data-count="8">m</span>od_exp ciphertext d n
+  let rsa_decrypt ciphertext (d, n) = <span data-count="118">m</span>od_exp ciphertext d n
 
   (* RSA key generation *)
   let generate_keys () =
-    <span data-count="3">l</span>et p = generate_prime 1000 10000 in
-    <span data-count="3">l</span>et q = generate_prime 1000 10000 in
-    <span data-count="3">l</span>et n = p * q in
+    <span data-count="13">l</span>et p = generate_prime 1000 10000 in
+    <span data-count="13">l</span>et q = generate_prime 1000 10000 in
+    <span data-count="13">l</span>et n = p * q in
 
     (* Calculate eulers totient function φ(n) *)
     let phi_n = (p - 1) * (q - 1) in
 
     (* Choose a public exponent 'e' such that gcd(e, φ(n)) = 1 *)
     let rec choose_e phi_n =
-      <span data-count="6">l</span>et e = Random.in<span data-count="6">t</span> (phi_n - 2) + 2 in
-      if find_gc<span data-count="6">d</span> e phi_n = 1 then <span data-count="3">e</span> else <span data-count="3">c</span>hoose_e phi_n
+      <span data-count="35">l</span>et e = Random.in<span data-count="35">t</span> (phi_n - 2) + 2 in
+      if find_gc<span data-count="35">d</span> e phi_n = 1 then <span data-count="13">e</span> else <span data-count="22">c</span>hoose_e phi_n
     in
     let e = choose_e phi_n in
 
     (* Use Util.mod_inv to calculate private exponent 'd' such that e * d ≡ 1
        (mod φ(n)) *)
-    <span data-count="3">l</span>et d = mod_inv e phi_n in
+    <span data-count="13">l</span>et d = mod_inv e phi_n in
 
     (* Public key: (e, n), Private key: (d, n) *)
-    <span data-count="3">(</span>(e, n), (d, n))
+    <span data-count="13">(</span>(e, n), (d, n))
 end
 </code></pre>
       </div>

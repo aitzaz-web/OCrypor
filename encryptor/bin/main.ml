@@ -5,6 +5,64 @@ open Encryptor.Sha3
 open Encryptor.Aes128
 open Encryptor.Blowfish
 
+(**encrypt_file_blowfish encrypts the contents of the file at filename using the
+   user's key. *)
+let encrypt_file_blowfish filename key =
+  try
+    let content = BatFile.with_file_in filename BatIO.read_all in
+    let rec split_into_chunks s chunk_size =
+      if String.length s <= chunk_size then [ s ]
+      else
+        let chunk = String.sub s 0 chunk_size in
+        let rest = String.sub s chunk_size (String.length s - chunk_size) in
+        chunk :: split_into_chunks rest chunk_size
+    in
+    let chunk_size = 8 in
+    let message_chunks = split_into_chunks content chunk_size in
+    let encrypted_chunks =
+      List.map (fun chunk -> encrypt chunk key) message_chunks
+    in
+    let encrypted_message = String.concat "" encrypted_chunks in
+    let encrypted_filename = filename ^ ".enc" in
+    BatFile.with_file_out encrypted_filename (fun out ->
+        BatIO.nwrite out encrypted_message);
+    print_endline ("File encrypted successfully. Saved as " ^ encrypted_filename)
+  with _ -> failwith "Error occurred during file level encryption."
+
+(**decrypt_file_blowfish decrypts the contents of the encrypted file at filename
+   using the user's key (same key that was used for encryption). *)
+let decrypt_file_blowfish filename key =
+  try
+    let content = BatFile.with_file_in filename BatIO.read_all in
+    let rec split_encrypted s chunk_sizes acc =
+      match chunk_sizes with
+      | [] -> List.rev acc
+      | size :: rest ->
+          let chunk = String.sub s 0 size in
+          let remaining = String.sub s size (String.length s - size) in
+          split_encrypted remaining rest (chunk :: acc)
+    in
+    let chunk_size = 96 in
+    let rec split_into_chunks s chunk_size =
+      if String.length s <= chunk_size then [ String.length s ]
+      else
+        chunk_size
+        :: split_into_chunks
+             (String.sub s chunk_size (String.length s - chunk_size))
+             chunk_size
+    in
+    let chunk_sizes = split_into_chunks content chunk_size in
+    let encrypted_chunks_split = split_encrypted content chunk_sizes [] in
+    let decrypted_chunks =
+      List.map (fun chunk -> decrypt chunk key) encrypted_chunks_split
+    in
+    let decrypted_message = String.concat "" decrypted_chunks in
+    let decrypted_filename = filename ^ ".dec" in
+    BatFile.with_file_out decrypted_filename (fun out ->
+        BatIO.nwrite out decrypted_message);
+    print_endline ("File decrypted successfully. Saved as " ^ decrypted_filename)
+  with _ -> failwith "Error occurred during file level decryption."
+
 (* Function to read a file and return its contents *)
 let read_file filename =
   try

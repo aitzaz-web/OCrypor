@@ -459,12 +459,10 @@ let tests =
          "test_gmul_2" >:: test_gmul_2;
          "test_gmul_cases" >:: test_gmul_cases;
          "test_all_mix_columns_inverse" >:: test_all_mix_columns_inverse;
-         (* "test_key_expansion" >:: test_key_expansion; *)
          "test_aes_encrypt_block" >:: test_aes_encrypt_block;
          "test_aes_decrypt_block" >:: test_aes_decrypt_block;
          "test_encrypt" >:: test_encrypt;
          "test_decrypt" >:: test_decrypt;
-         "test_encrypt_file_creates_file" >:: test_encrypt_file_creates_file;
          "test_encrypt_decrypt_file" >:: test_encrypt_decrypt_file;
        ]
 

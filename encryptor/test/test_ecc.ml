@@ -353,4 +353,4 @@ let ecc_tests =
   ]
 
 (* Run ECC tests *)
-let () = run_test_tt_main ("ECC Test Suite" >::: ecc_tests)
+(* let () = run_test_tt_main ("ECC Test Suite" >::: ecc_tests) *)

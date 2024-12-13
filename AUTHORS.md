@@ -25,6 +25,7 @@ Joshua:
      -in assert_failure tests
      -in encrypt_file_blowfish and decrypt_file_blowfish functions
      -base_data_dir function for data dir paths
+     -write the test_encrypt_file_blowfish and test_decrypt_file_blowfish test cases
 
 2) Blowfish reference: https://jacobfilipp.com/DrDobbs/articles/DDJ/1994/9404/9404d/9404d.htm
 

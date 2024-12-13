@@ -29,9 +29,18 @@ let read_int64_array filename =
   ) in
   let arr = Array.of_list values in
   arr
+
+(**[base_data_dir] ensures that file paths to the data directory are correct.*)
+let base_data_dir =
+  let rec find_root dir =
+    if Sys.file_exists (Filename.concat dir "dune-project") then dir
+    else find_root (Filename.dirname dir)
+  in
+  find_root (Sys.getcwd ()) ^ "/data/"
+
 (* Load the constants *)
-let pitable = read_hex_array "data/rc2_pitable.csv"
-let keccak_round_constants = read_int64_array "data/keccak_constants.csv"
+let pitable = read_hex_array (base_data_dir ^ "rc2_pitable.csv")
+let keccak_round_constants = read_int64_array (base_data_dir ^ "keccak_constants.csv")
 
 let rotl64 x n =
   Int64.logor (Int64.shift_left x n) (Int64.shift_right_logical x (64 - n))
