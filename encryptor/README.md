@@ -31,6 +31,8 @@ Enter the filename containing the message to encrypt: test.txt
 Using key (derived from filename): test.txt
 Encrypted file saved as: test.txt.enc
 
+DECRYPT:
+
 Enter your choice (1-5): 3
 Choose operation: 1 for Encrypt, 2 for Decrypt: 2
 Enter the filename containing the encrypted message: test.txt.enc (make sure file is test.txt.enc)
