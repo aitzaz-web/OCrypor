@@ -60,7 +60,9 @@ let ask_for_method () =
   Printf.printf
     "   - Example: Encrypting internal company files or trade secrets.\n\n";
   Printf.printf "5. Blowfish\n";
-  Printf.printf "   - Low Safety: Suitable for non-critical or legacy files.\n";
+  Printf.printf
+    "   - Low Safety: Suitable for non-critical or legacy files. Users can \
+     create their own numeric keys for encryption.\n";
   Printf.printf
     "   - Example: Encrypting archived documents or small datasets in older \
      systems.\n\n";
