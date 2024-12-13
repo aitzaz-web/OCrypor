@@ -134,22 +134,6 @@ let key_expansion key =
   done;
   Array.init 11 (fun i -> Array.sub key_words (i * 4) 4)
 
-let serialize_state state =
-  Array.map
-    (fun row ->
-      Array.map (Printf.sprintf "%02X") row
-      |> Array.to_list |> String.concat " ")
-    state
-  |> Array.to_list |> String.concat "\n"
-
-let deserialize_state serialized =
-  serialized |> String.split_on_char '\n'
-  |> List.map (fun row ->
-         row |> String.split_on_char ' '
-         |> List.map (fun hex -> int_of_string ("0x" ^ hex))
-         |> Array.of_list)
-  |> Array.of_list
-
 let state_to_string state =
   let buffer = Buffer.create 16 in
   Array.iter

@@ -410,18 +410,30 @@ let rsa_workflow () =
                key format. Use 'd n' format (e.g., 413 3233).\n"))
   | _ -> Printf.printf "Invalid operation for RSA.\n"
 
-(* Other Algorithm(s) *)
-let other_workflows method_choice filename content =
-  match method_choice with
-  | `AES128 ->
-      let key = "examplekey123456" in
-      Printf.printf "AES-128 Key: %s\n" key;
-      let encrypted_message = Encryptor.Aes128.encrypt content key in
-      Printf.printf "Encrypted message: %s\n" encrypted_message;
+let aes128_workflow () =
+  (* Step 1: Ask whether to Encrypt or Decrypt *)
+  Printf.printf "Would you like to (1) Encrypt or (2) Decrypt a file? ";
+  let operation = read_line () in
 
-      let decrypted_message = Encryptor.Aes128.decrypt encrypted_message key in
-      Printf.printf "Decrypted message: %s\n" decrypted_message
-  | _ -> Printf.printf "Invalid method selected.\n"
+  (* Step 2: Ask for the file name *)
+  Printf.printf "Enter the filename: ";
+  let filename = read_line () in
+
+  (* Step 3: Ask for the AES-128 key *)
+  Printf.printf "Enter the AES-128 Key (16 Characters): ";
+  let key = read_line () in
+  if String.length key <> 16 then (
+    Printf.printf "Error: Key must be exactly 16 characters.\n";
+    exit 1);
+
+  (* Step 4: Perform the chosen operation *)
+  match operation with
+  | "1" -> encrypt_file filename key
+  | "2" -> decrypt_file filename key
+  | _ ->
+      Printf.printf
+        "Invalid option. Please select (1) to Encrypt or (2) to Decrypt.\n";
+      exit 1
 
 (* Main Driver Program *)
 let rsa_ecc_aes_workflow () =
@@ -431,12 +443,8 @@ let rsa_ecc_aes_workflow () =
   | `Blowfish -> blowfish_workflow ()
   | `ECC -> ecc_workflow ()
   | `SHA3 -> sha3_workflow ()
-  | _ -> (
-      Printf.printf "Enter the filename containing the message: ";
-      let filename = read_line () in
-      match read_file filename with
-      | Some content -> other_workflows method_choice filename content
-      | None -> Printf.printf "Failed to read the file.\n")
+  | `AES128 -> aes128_workflow ()
+  | _ -> Printf.printf "Invalid method selected.\n"
 
 let () =
   match Array.to_list Sys.argv with
