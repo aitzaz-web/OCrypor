@@ -25,16 +25,12 @@ SHA3/RC2
 
 ENCRYPT:
 
-Enter your choice (1-5): 3
-Choose operation: 1 for Encrypt, 2 for Decrypt: 1
-Enter the filename containing the message to encrypt: test.txt
-Using key (derived from filename): test.txt
-Encrypted file saved as: test.txt.enc
+select option 3 followed by 1
+file name (must end with .txt)
+Encrypted file will be saved as: <filename>.txt
 
 DECRYPT:
 
-Enter your choice (1-5): 3
-Choose operation: 1 for Encrypt, 2 for Decrypt: 2
-Enter the filename containing the encrypted message: test.txt.enc (make sure file is test.txt.enc)
-Using key (derived from filename): test.txt.enc
-Decrypted file saved as: test.txt.enc.dec
+select option 3 followed by 2
+file name (must end with txt.enc)
+Decrypted file will be saved as: <filename>.txt.enc
