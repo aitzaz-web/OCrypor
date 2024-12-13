@@ -18,15 +18,14 @@ Aitzaz:
 
 Joshua:
 1) Used chatgpt for:
-     -defining function to convert between an ascii list and a string in the encryptor test file
-     -writing the int_to_binary and binary_to_int functions in blowfish.ml
-     -string_to_binary, binary_to_string, and binary_string_to_list in blowfish.ml
-     -tracking and adjusting for the amount of padding in encrypt and decrypt
-     -Printf.sprintf "%08d" usage
-     -in assert_failure tests
-     -in encrypt_file_blowfish and decrypt_file_blowfish functions
-     -base_data_dir function for data dir paths
-     -write the test_encrypt_file_blowfish and test_decrypt_file_blowfish test cases
+     - defining function to convert between an ascii list and a string in the encryptor test file
+     - writing the int_to_binary and binary_to_int functions in blowfish.ml
+     - string_to_binary, binary_to_string, and binary_string_to_list in blowfish.ml
+     - tracking and adjusting for the amount of padding in encrypt and decrypt
+     - Printf.sprintf "%08d" usage
+     - in assert_failure tests
+     - in encrypt_file_blowfish and decrypt_file_blowfish functions
+     - base_data_dir function for data dir paths
 
 2) Blowfish reference: https://jacobfilipp.com/DrDobbs/articles/DDJ/1994/9404/9404d/9404d.htm
 
