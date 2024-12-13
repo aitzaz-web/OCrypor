@@ -11,6 +11,5 @@ Members:
 
 How to run the program:
 1) run dune build in the terminal
-2) run dune exec bin/main.exe in terminal
-3) Insert sample file: you can use sample file in directory e.g by inputting data/sampleinput2.txt
-4) Program will generate the public key and private key as well as show that the encryption and decryption is working correctly.
+2) run dune exec bin/main.exe encryptor in terminal
+3) Follow the prompts by the program. When entering a filename, add data as prefix so for sampleinput1.txt, you'd do data/sampleinput1.txt.
